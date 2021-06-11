@@ -15,13 +15,29 @@ variables L: list E
 #check barycenter ↑L
 
 -- Donada una ordenació dels vertexs de cada cara, tenim un simplex de la subdivisió baricentrica.
-def face_baricentric_subdivision(L : list E)[list.nodup L]: finset E :=
+-- To do, afegir `[list.nodup L]`
+def face_baricentric_subdivision(L : list E): set E :=
   begin
+    induction L with L' hL' smaller_dim_baricentric_subdivision,
+    {
+      exact (∅ : finset E),
+    },
+    {
+      let B := barycenter ↑L',
+      
+      exact {B} ∪ smaller_dim_baricentric_subdivision,
+      
+      { -- no se perque haig de demostrar això.
+        fconstructor,
+        intro x,
+        exact [x],
+      },
+      
+    },
     -- Definició recursiva
     -- Si L.length > 1,
     -- afegitm el punt `barycenter L` i tots els punts de `face_barycentric_subdivision L.tail`
     -- Si L.length = 1, afegim el punt.
-    sorry,
   end
 -- Cada cara del complx simplicial s'ha de subdividir amb aquesta funció. 
 -- Per cada permutació dels vertexs de la cara tenim un simplex de la subdivisió.
