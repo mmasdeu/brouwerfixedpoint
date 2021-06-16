@@ -31,7 +31,7 @@ structure triangulation :=
 
 
 lemma fixed_point_of_epsilon_fixed (X : Type) [metric_space X]
-  (hsq : seq_compact_space X)
+  [hsq : seq_compact_space X]
   (f : X → X) (hf : continuous f)
   (h : ∀ (ε : ℝ), 0 < ε → ∃ x, dist x (f x) < ε) :
   ∃ x : X, f x = x :=
@@ -128,7 +128,14 @@ begin
   calc
   dist z (f z) ≤ dist z ((a ∘ Φ) n)
                 + dist ((a ∘ Φ) n) (f ((a ∘ Φ) n))
-                + dist (f ((a ∘ Φ) n)) (f z) : by {apply dist_triangle4}
+                + dist (f ((a ∘ Φ) n)) (f z) : dist_triangle4 z ((a ∘ Φ) n) (f ((a ∘ Φ) n)) (f z)
   ... ≤ ε/3 + ε/3 + ε/3 : by { linarith [hn1, hn2, hn3] }
   ... = ε : by {linarith}
+end
+
+lemma diameter_growth (X : Type) [metric_space X] (S : set X)
+(f : X → X) (hf : uniform_continuous_on f S) (ε : ℝ) (hε : 0 < ε)
+: ∃ δ > 0, ∀ T ⊆ S, metric.diam T < δ → metric.diam (f '' T) < ε :=
+begin
+  sorry
 end
