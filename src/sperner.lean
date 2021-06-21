@@ -111,13 +111,13 @@ begin
 end
 
 lemma enndiameter_growth (X : Type) [metric_space X] (S : set X)
-(f : X → X) (hf : uniform_continuous_on f S) (ε : nnreal) (hε : 0 < ε) : 
+  (f : X → X) (hf : uniform_continuous_on f S) (ε : nnreal) (hε : 0 < ε) : 
   ∃ (δ : nnreal) (hδ : δ > 0), ∀ T ⊆ S, emetric.diam T ≤ δ → emetric.diam (f '' T) ≤ ε :=
 let ⟨δ, hδ, H⟩ := (characterisation_uniform_continuous_on S f).1 hf ε hε in 
   ⟨δ, hδ, (λ R hR hdR, emetric.diam_image_le_iff.2 (λ x hx y hy, H x y (emetric.diam_le_iff.1 hdR x hx y hy)))⟩
 
 lemma diameter_growth (X : Type) [metric_space X] (S : set X)
-(f : X → X) (hf : uniform_continuous_on f S) (ε : ℝ) (hε : 0 < ε) : 
+  (f : X → X) (hf : uniform_continuous_on f S) (ε : ℝ) (hε : 0 < ε) : 
   ∃ δ > 0, ∀ T ⊆ S, metric.bounded T → metric.diam T ≤ δ → metric.diam (f '' T) ≤ ε :=
 let ⟨δ, ⟨hδ,HH⟩⟩ := enndiameter_growth _ _ _ hf _ (real.to_nnreal_pos.mpr hε),
 h2 : ∀ (T : set X), T ⊆ S → metric.bounded T → metric.diam T ≤ ↑δ → metric.diam (f '' T) ≤ ε :=
