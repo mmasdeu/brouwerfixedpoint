@@ -163,8 +163,8 @@ lemma points_subset_space :
   S.points ⊆ S.space :=
 bUnion_subset_bUnion_right (λ x hx, subset_convex_hull x)
 
-def simplicial_complex.dim (S : simplicial_complex E) :
-  ℕ := sorry
+--noncomputable def simplicial_complex.dim (S : simplicial_complex E) :
+--  ℕ :=
 
 -- Dumb bug in mathlib, see
 --https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there.20code.20for.20X.3F/topic/R.5Em.20is.20finite.20dimensional.20over.20R/near/231748016
@@ -380,8 +380,8 @@ lemma simplex_combi_interiors_split_interiors (hY : affine_independent ℝ (λ p
   (hXY : convex_hull (X : set E) ⊆ convex_hull ↑Y) :
   ∃ Z ⊆ Y, combi_interior X ⊆ combi_interior Z :=
 begin
-  let S := simplicial_complex.of_simplex hY,
-  let F := Y.powerset.filter (λ W : finset E, (X : set E) ⊆ convex_hull W),
+  --let S := simplicial_complex.of_simplex hY,
+  --let F := Y.powerset.filter (λ W : finset E, (X : set E) ⊆ convex_hull ↑W),
   sorry
   /-obtain ⟨Z, hZ, hZmin⟩ := finset.inf' _
   (begin
