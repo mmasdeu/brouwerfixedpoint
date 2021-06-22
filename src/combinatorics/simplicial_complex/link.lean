@@ -3,7 +3,7 @@ import combinatorics.simplicial_complex.closure
 
 namespace affine
 open set
-variables {m n k : ℕ} {E : Type*} [normed_group E] [normed_space ℝ E]
+variables {m n k : ℕ} {E : Type*} [normed_group E] [normed_space ℝ E] [decidable_eq E]
   {S : simplicial_complex E} {X Y : finset E} {A : set (finset E)}
 
 def simplicial_complex.link (S : simplicial_complex E) (A : set (finset E)) :
@@ -20,11 +20,13 @@ def simplicial_complex.link (S : simplicial_complex E) (A : set (finset E)) :
   disjoint := λ X X' ⟨hXdisj, Y, Z, hY, hZ, hXZ, hYZ⟩ ⟨hXdisj', Y', Z', hY', hZ', hXZ', hYZ'⟩,
     S.disjoint (S.down_closed hZ hXZ) (S.down_closed hZ' hXZ') }
 
+
 lemma link_empty :
   (S.link ∅).faces = ∅ :=
 begin
   unfold simplicial_complex.link,
-  simp,
+  sorry,
+  --simp,
 end
 
 lemma link_singleton_empty :
@@ -33,16 +35,20 @@ begin
   ext X,
   split,
   {
-    rintro ⟨_, _, Z, _, hZ, hXZ, _⟩,
-    exact S.down_closed hZ hXZ,
+    sorry,
+    --rintro ⟨_, _, Z, _, hZ, hXZ, _⟩,
+    --exact S.down_closed hZ hXZ,
   },
   {
     rintro hX,
+    sorry,
+    /-
     split,
     { rintro W (h : W = ∅),
       rw h,
       exact finset.disjoint_empty_left X, },
     exact ⟨∅, X, rfl, hX, subset.refl X, empty_subset X⟩,
+    -/
   }
 end
 

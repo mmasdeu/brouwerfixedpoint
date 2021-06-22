@@ -3,7 +3,7 @@ import combinatorics.simplicial_complex.subdivision
 
 namespace affine
 open set
-variables {m n : ℕ} {E : Type*} [normed_group E] [normed_space ℝ E] {S : simplicial_complex E}
+variables {m n : ℕ} {E : Type*} [normed_group E] [decidable_eq E] [normed_space ℝ E] {S : simplicial_complex E}
   {X Y : finset E} {A : set (finset E)}
 
 def simplicial_complex.on_boundary (S : simplicial_complex E) (X : finset E) :

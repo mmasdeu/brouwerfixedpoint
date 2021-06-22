@@ -2,7 +2,7 @@ import combinatorics.simplicial_complex.link
 
 namespace affine
 open set
-variables {E : Type*} [normed_group E] [normed_space ℝ E] {S : simplicial_complex E}
+variables {E : Type*} [normed_group E] [normed_space ℝ E] [decidable_eq E] {S : simplicial_complex E}
   {A : set (finset E)}
 
 /--

@@ -57,7 +57,8 @@ def polytope.edges (p : polytope E) :
   set (finset E) :=
 ⋂ (S : simplicial_complex E) (H : p.space = S.space), {X | X ∈ S.faces ∧ X.card = 2}
 
---def polytope.faces {n : ℕ} (P : polytope E) : set (finset E) :=
+def polytope.faces {n : ℕ} (P : polytope E) : set (finset E) :=
+sorry
 --  P.realisation.boundary.faces
 
 noncomputable def polytope.triangulation (p : polytope E) :

@@ -163,8 +163,8 @@ lemma points_subset_space :
   S.points ⊆ S.space :=
 bUnion_subset_bUnion_right (λ x hx, subset_convex_hull x)
 
---noncomputable def simplicial_complex.dim (S : simplicial_complex E) :
---  ℕ :=
+def simplicial_complex.dim (S : simplicial_complex E) :
+  ℕ := sorry
 
 -- Dumb bug in mathlib, see
 --https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there.20code.20for.20X.3F/topic/R.5Em.20is.20finite.20dimensional.20over.20R/near/231748016

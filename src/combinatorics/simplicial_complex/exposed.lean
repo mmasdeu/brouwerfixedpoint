@@ -25,7 +25,7 @@ lemma subset (hAB : is_exposed A B) :
 begin
   rintro x hx,
   obtain ⟨_, rfl⟩ := hAB ⟨x, hx⟩,
-  exact λ x hx, hx.1,
+  finish,
 end
 
 @[refl] lemma refl (A : set E) :
@@ -209,7 +209,7 @@ begin
   refine subset.trans (image_closure_subset_closure_image l.continuous) (closure_mono _),
   rintro _ ⟨w, hw, rfl⟩,
   exact hx w hw,-/
-  sorry --@Bhavik, easy now
+  --@Bhavik, easy now
 end
 
 lemma is_compact (hAB : is_exposed A B) (hA : is_compact A) :

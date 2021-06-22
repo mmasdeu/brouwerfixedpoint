@@ -125,6 +125,7 @@ begin
     exact (hx.2 la hla).trans (hy la (hs hla)) },
   have := hx.1 la (hs hla),
   dsimp at hx,
+  sorry,
 end
 
 lemma subset_of_mem_faces {P Q : polyhedron E} (hQ : Q ∈ P.faces) : (Q : set E) ⊆ P :=
@@ -148,7 +149,9 @@ end
 
 lemma faces_finite (P : polyhedron E) : finite P.faces := sorry
 
-instance face_lattice {P : polyhedron E} : complete_lattice P.faces :=
+noncomputable instance face_lattice {P : polyhedron E} : complete_lattice P.faces :=
+sorry
+/-
 { le := λ ⟨X, hX⟩ ⟨Y, hY⟩, X ∈ Y.faces,
   le_refl := λ ⟨X, hX⟩, X.self_mem_faces,
   le_trans := λ ⟨X, hX⟩ ⟨Y, hY⟩ ⟨Z, hZ⟩ hXY hYZ hXnemp, begin
@@ -205,7 +208,7 @@ instance face_lattice {P : polyhedron E} : complete_lattice P.faces :=
   Inf := _,
   Inf_le := _,
   le_Inf := _ }
-
+-/
 end polyhedron
 
 def is_exposed.to_face {P : polyhedron E} {A : set E} (hA : is_exposed (P : set E) A) :
@@ -266,7 +269,7 @@ def preimage_polyhedron (P : polyhedron F) : polyhedron E :=
 end continuous_linear_map
 
 /---/
-def lattice_polyhedrons : semilattice_inf_top (polyhedron E) :=
+instance lattice_polyhedrons : semilattice_inf_top (polyhedron E) :=
 { le := λ X Y, (X : set E) ⊆ Y,
   le_refl := λ X, subset.refl X,
   le_trans := λ X Y Z, subset.trans,
@@ -284,8 +287,8 @@ def lattice_polyhedrons : semilattice_inf_top (polyhedron E) :=
     rintro x hx,
     exact ⟨λ l hl, hx l (finset.mem_union_left _ hl), λ l hl, hx l (finset.mem_union_right _ hl)⟩,
   end },
-  inf_le_left := λ X Y, inter_subset_left X Y,
-  inf_le_right := λ X Y, inter_subset_right X Y,
+  inf_le_left := λ X Y, inter_subset_left X.carrier Y,
+  inf_le_right := λ X Y, inter_subset_right X.carrier Y,
   le_inf := λ X Y Z, subset_inter,
 
   /-bot := { carrier := ∅,
@@ -325,6 +328,8 @@ def face_order_polyhedrons : order_bot (polyhedron E) :=
 /-- The faces of a polyhedron form a bounded and graded lattice. The grading function is the
 dimensican of the face. -/
 def face_lattice_polyhedron (P : polyhedron E) : bounded_lattice P.faces :=
+sorry
+/-
 { le := λ ⟨X, hX⟩ ⟨Y, hY⟩, X ∈ Y.faces,
   le_refl := λ ⟨X, hX⟩, X.self_mem_faces,
   le_trans := λ ⟨X, hX⟩ ⟨Y, hY⟩ ⟨Z, hZ⟩ hXY hYZ hXnemp, begin
@@ -355,6 +360,7 @@ def face_lattice_polyhedron (P : polyhedron E) : bounded_lattice P.faces :=
 
   top := ⟨P, P.self_mem_faces⟩,
   le_top := λ ⟨X, hX⟩, hX }
+-/
 
 /-! ### Polytopes -/
 
