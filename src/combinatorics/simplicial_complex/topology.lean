@@ -1,5 +1,5 @@
 import tactic
-import data.fincard
+--import data.fincard
 import data.real.basic
 import linear_algebra.affine_space.independent
 import linear_algebra.std_basis
