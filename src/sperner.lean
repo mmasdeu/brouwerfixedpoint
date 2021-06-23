@@ -12,6 +12,7 @@ open topological_space
 
 open_locale affine
 open_locale filter
+open_locale big_operators
 
 variables  {V : Type*} [add_comm_group V] [module ℝ V]
 variables [affine_space V V]
@@ -118,27 +119,39 @@ let ⟨δ, hδ, H⟩ := (characterisation_uniform_continuous_on S f).1 hf ε hε
 
 lemma diameter_growth (X : Type) [metric_space X] (S : set X)
   (f : X → X) (hf : uniform_continuous_on f S) (ε : ℝ) (hε : 0 < ε) : 
-  ∃ δ > 0, ∀ T ⊆ S, metric.bounded T → metric.diam T ≤ δ → metric.diam (f '' T) ≤ ε :=
+  ∃ δ > 0, ∀ T ⊆ S, metric.bounded T → metric.diam T ≤ δ →
+  metric.bounded (f '' T) ∧ metric.diam (f '' T) ≤ ε :=
 let ⟨δ, ⟨hδ,HH⟩⟩ := enndiameter_growth _ _ _ hf _ (real.to_nnreal_pos.mpr hε),
-h2 : ∀ (T : set X), T ⊆ S → metric.bounded T → metric.diam T ≤ ↑δ → metric.diam (f '' T) ≤ ε :=
+h2 : ∀ (T : set X), T ⊆ S → metric.bounded T → metric.diam T ≤ ↑δ → metric.bounded (f '' T) ∧ metric.diam (f '' T) ≤ ε :=
   (λ T hT1 hTb hT2, let hT2 : emetric.diam T ≤ δ := 
     (let htop := metric.bounded.ediam_ne_top hTb in
       (ennreal.to_real_le_to_real htop (ennreal.coe_ne_top)).mp (by rwa ennreal.coe_to_real)), 
     hHH := HH T hT1 hT2 in 
-    by rwa [metric.diam, ←@ennreal.le_of_real_iff_to_real_le (emetric.diam (f '' T)) ε 
-      (λ hc, ennreal.not_top_le_coe (by rwa ← hc)) (le_of_lt hε)]) in 
+    by
+    begin
+      split,
+      {
+        sorry
+      },
+      rwa [metric.diam, ←@ennreal.le_of_real_iff_to_real_le (emetric.diam (f '' T)) ε
+      (λ hc, ennreal.not_top_le_coe (by rwa ← hc)) (le_of_lt hε)]
+    end
+  ) in
 ⟨δ, nnreal.coe_pos.mpr hδ, h2⟩
 
 variable d : ℕ -- m'agradaria ficar que d ≥ 1 aquí
 local notation `E` := fin d → ℝ
 
+
 -- hd és superflua, és perquè la dimensió no sigui 0 i aleshores l'enunciat peti
-lemma ordered_vertices_implies_epsilon_fixed (hd : d > 0) (S : set E) (f : E → E) 
-(hf : uniform_continuous_on f S) (ε : ℝ) (hε : 0 < ε)
-: ∃ δ > 0, ∀ T ⊆ S, metric.diam T < δ ∧ 
-(∃ p : fin d → E, ∀ i : fin d, ↑i+1 < d → 
+lemma ordered_vertices_implies_epsilon_fixed (hd : d > 0) (S : set E)
+(f : E → E)
+(hS : ∀ (s : E), s ∈ S → (∑ (i : fin d), s i) = 1)
+(hf : uniform_continuous_on f S) (ε : nnreal) (hε : 0 < ε)
+: ∃ δ > 0, ∀ T ⊆ S, emetric.diam T < δ ∧
+(∃ p : fin d → E, ∀ i : fin d, (i : ℕ) + 1 < d → 
 (f (p i)) i < (p i) i ∧ (f (p (fin_rotate d i)) i ≥ (p (fin_rotate d i)) i))
-→ ∀ x ∈ T, dist (f x) x < ε :=
+→ ∀ x ∈ T, edist (f x) x < ε :=
 begin
   sorry
 end
