@@ -367,7 +367,7 @@ sorry
 /-- A polytope is the convex hull of a finite number of points. -/
 structure polytope (E : Type*) [normed_group E] [normed_space ℝ E] :=
 (carrier : set E)
-(hcarrier : ∃ Vrepr : finset E, carrier = convex_hull Vrepr)
+(hcarrier : ∃ Vrepr : finset E, carrier = convex_hull ↑Vrepr)
 
 namespace polytope
 
@@ -384,7 +384,7 @@ end
 noncomputable def Vrepr (P : polytope E) : finset E :=
 classical.some P.hcarrier
 
-lemma eq_convex_hull_Vrepr (P : polytope E) : (P : set E) = convex_hull P.Vrepr :=
+lemma eq_convex_hull_Vrepr (P : polytope E) : (P : set E) = convex_hull ↑P.Vrepr :=
 classical.some_spec P.hcarrier
 
 lemma convex (P : polytope E) : convex (P : set E) :=
