@@ -1,5 +1,6 @@
 import combinatorics.simplicial_complex.link
 import combinatorics.simplicial_complex.subdivision
+import set_theory.fincard
 
 namespace affine
 open set
