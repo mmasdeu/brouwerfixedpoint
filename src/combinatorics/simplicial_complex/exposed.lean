@@ -196,8 +196,8 @@ begin
   { rw hB,
     exact is_closed_empty },
   obtain ⟨l, rfl⟩ := hAB hB,
-  apply is_closed_inter hA,
-  refine closure_eq_iff_is_closed.1 (subset.antisymm _ subset_closure),
+  --apply is_closed_inter hA,
+  --refine closure_eq_iff_is_closed.1 (subset.antisymm _ subset_closure),
   sorry
   /-rw sequentie
   rw ←is_seq_closed_iff_is_closed,
