@@ -147,19 +147,34 @@ begin
   sorry
 end
 
-variable d : ℕ -- m'agradaria ficar que d ≥ 1 aquí
+variables {d : ℕ} [hd: 0 < d]
 local notation `E` := fin d → ℝ
 
+local notation `H`:= { x: E | (∑ (i : fin d), x i) = 1}
 
--- hd és superflua, és perquè la dimensió no sigui 0 i aleshores l'enunciat peti
-lemma ordered_vertices_implies_epsilon_fixed (hd : d > 0) (S : set E)
+-- S is the set of vertices of a simplex
+variables (S: set E) [hS: S ⊆ H] 
+
+variables (f: E → E) [hf: uniform_continuous_on f S]
+
+-- per tota coordenada i, existeix un vertex v tal que la coordenada i-èssima 
+-- és la primera que complex que f(v)_i < f(v)
+def is_sperner_triangle (f: E → E): Prop := 
+  ∀ i: fin d, ∃ p: E, p ∈ S → (∀ j < i, (f p) j ≥  (p:E) j) ∧ (((f p) i) < p i)
+
+lemma ordered_vertices_implies_epsilon_fixed
 (f : E → E)
-(hS : ∀ (s : E), s ∈ S → (∑ (i : fin d), s i) = 1)
-(hf : uniform_continuous_on f S) (ε : nnreal) (hε : 0 < ε)
+(hf : uniform_continuous_on f (convex_hull S)) 
+(ε : ennreal) (hε : (ε) > 0)
 : ∃ δ > 0, ∀ T ⊆ S, emetric.diam T < δ ∧
-(∃ p : fin d → E, ∀ i : fin d, (i : ℕ) + 1 < d → 
-(f (p i)) i < (p i) i ∧ (f (p (fin_rotate d i)) i ≥ (p (fin_rotate d i)) i))
+is_sperner_triangle S f
 → ∀ x ∈ T, edist (f x) x < ε :=
 begin
-  sorry
+  let ε₁ := ε / (2 * d),
+  have h₁ : ε₁ > 0 := by sorry, 
+  obtain ⟨δ₀, hδ₀⟩ := emetric.uniform_continuous_on_iff.mp hf ε₁ h₁,
+  let δ := min δ₀ (ε₁/2),
+  
+  sorry,
+
 end
