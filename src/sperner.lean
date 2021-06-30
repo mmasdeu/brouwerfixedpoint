@@ -150,7 +150,7 @@ variables (f: E → E) [hf: uniform_continuous_on f S]
 -- per tota coordenada i, existeix un vertex v tal que la coordenada i-èssima 
 -- és la primera que complex que f(v)_i < f(v)
 def is_sperner_triangle (f: E → E): Prop := 
-  ∀ i: fin d, ∃ p: E, p ∈ S → (∀ j < i, (f p) j ≥  (p:E) j) →  (((f p) i) < p i)
+  ∀ i: fin d, ∃ p: E, p ∈ S → (∀ j < i, (f p) j ≥  (p:E) j) ∧ (((f p) i) < p i)
 
 
 lemma ordered_vertices_implies_epsilon_fixed (S : set E)
