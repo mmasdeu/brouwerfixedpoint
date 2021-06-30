@@ -156,10 +156,12 @@ def is_sperner_triangle (f: E → E): Prop :=
 lemma ordered_vertices_implies_epsilon_fixed (S : set E)
 (f : E → E)
 (hS : ∀ (s : E), s ∈ S → (∑ (i : fin d), s i) = 1)
-(hf : uniform_continuous_on f (convex_hull S)) (ε : nnreal) (hε : 0 < ε)
+(hf : uniform_continuous_on f (convex_hull S)) (ε : nnreal) (hε : (ε: real) > 0)
 : ∃ δ > 0, ∀ T ⊆ S, emetric.diam T < δ ∧
 is_sperner_triangle S f
 → ∀ x ∈ T, edist (f x) x < ε :=
 begin
-  sorry
+  have h₁ := emetric.uniform_continuous_on_iff.mp hf ε, --hε doesn't work
+  sorry,
+
 end
