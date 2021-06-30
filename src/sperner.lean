@@ -104,40 +104,48 @@ begin
   ... = ε : by {ring},
 end
 
-lemma characterisation_uniform_continuous_on {X : Type} [metric_space X] (S : set X) (f : X → X):
-  uniform_continuous_on f S ↔ ∀ (ε : nnreal) (hε : ε > 0), ∃ (δ : nnreal) (hδ : δ > 0), 
-  ∀ (x y : X), edist x y ≤ δ → edist (f x) (f y) ≤ ε :=
-begin
-  sorry
-end
+lemma le_max_right_or_left {α : Type*} [linear_order α] (a b : α) : a ≤ min a b ∨ b ≤ min a b:=
+by cases (le_total a b) with h; simp [true_or, le_min rfl.ge h]; exact or.inr h
+
+lemma edist_lt_of_diam_lt {X : Type*} [pseudo_metric_space X] (s : set X)  {d : ennreal} :
+  emetric.diam s < d → ∀ (x ∈ s) (y ∈ s), edist x y < d :=
+λ h x hx y hy, gt_of_gt_of_ge h (emetric.edist_le_diam_of_mem hx hy)
+
+lemma enndiameter_growth' {X : Type} [metric_space X] {S : set X}
+  {f : X → X} (hf : uniform_continuous_on f S) : ∀ ε > 0,  ∃ δ > 0, 
+  ∀ T ⊆ S, emetric.diam T < δ → emetric.diam (f '' T) ≤ ε :=
+λ ε hε, let ⟨δ, hδ, H⟩ := emetric.uniform_continuous_on_iff.1 hf ε hε in
+  ⟨δ, hδ, λ R hR hdR, emetric.diam_image_le_iff.2 
+  (λ x hx y hy, le_of_lt (H (hR hx) (hR hy) (edist_lt_of_diam_lt R hdR x hx y hy)))⟩
 
 lemma enndiameter_growth (X : Type) [metric_space X] (S : set X)
-  (f : X → X) (hf : uniform_continuous_on f S) (ε : nnreal) (hε : 0 < ε) : 
-  ∃ (δ : nnreal) (hδ : δ > 0), ∀ T ⊆ S, emetric.diam T ≤ δ → emetric.diam (f '' T) ≤ ε :=
-let ⟨δ, hδ, H⟩ := (characterisation_uniform_continuous_on S f).1 hf ε hε in 
-  ⟨δ, hδ, (λ R hR hdR, emetric.diam_image_le_iff.2 (λ x hx y hy, H x y (emetric.diam_le_iff.1 hdR x hx y hy)))⟩
+  (f : X → X) (hf : uniform_continuous_on f S) : ∀ ε > 0,  ∃ δ > 0, 
+  ∀ T ⊆ S, emetric.diam T < δ → emetric.diam (f '' T) < ε :=
+begin
+  intros ε hε,
+  set γ := min 1 (ε/2) with hhγ,
+  have hγ : γ > 0,
+  { cases (le_max_right_or_left 1 (ε/2)),
+    { exact lt_of_lt_of_le (ennreal.zero_lt_one) h },
+    { exact lt_of_lt_of_le (ennreal.div_pos_iff.2 ⟨ne_of_gt hε, ennreal.two_ne_top⟩) h } },
+  obtain ⟨δ, hδ, H⟩ := enndiameter_growth' hf γ hγ,
+  use δ, split, exact hδ,
+  intros R hR hdR,
+  have hγε: γ < ε,
+  { cases (lt_or_ge 1 ε),
+    { exact lt_of_le_of_lt (min_le_left 1 (ε/2)) h },
+    { have hεtop := ne_of_lt (lt_of_le_of_lt h (lt_of_le_of_ne le_top ennreal.one_ne_top)),
+      exact lt_of_le_of_lt (min_le_right 1 (ε/2)) (ennreal.half_lt_self (ne_of_gt hε) hεtop) } },
+  exact lt_of_le_of_lt (H R hR hdR) hγε,
+end
 
 lemma diameter_growth (X : Type) [metric_space X] (S : set X)
   (f : X → X) (hf : uniform_continuous_on f S) (ε : ℝ) (hε : 0 < ε) : 
   ∃ δ > 0, ∀ T ⊆ S, metric.bounded T → metric.diam T ≤ δ →
   metric.bounded (f '' T) ∧ metric.diam (f '' T) ≤ ε :=
-let ⟨δ, ⟨hδ,HH⟩⟩ := enndiameter_growth _ _ _ hf _ (real.to_nnreal_pos.mpr hε),
-h2 : ∀ (T : set X), T ⊆ S → metric.bounded T → metric.diam T ≤ ↑δ → metric.bounded (f '' T) ∧ metric.diam (f '' T) ≤ ε :=
-  (λ T hT1 hTb hT2, let hT2 : emetric.diam T ≤ δ := 
-    (let htop := metric.bounded.ediam_ne_top hTb in
-      (ennreal.to_real_le_to_real htop (ennreal.coe_ne_top)).mp (by rwa ennreal.coe_to_real)), 
-    hHH := HH T hT1 hT2 in 
-    by
-    begin
-      split,
-      {
-        sorry
-      },
-      rwa [metric.diam, ←@ennreal.le_of_real_iff_to_real_le (emetric.diam (f '' T)) ε
-      (λ hc, ennreal.not_top_le_coe (by rwa ← hc)) (le_of_lt hε)]
-    end
-  ) in
-⟨δ, nnreal.coe_pos.mpr hδ, h2⟩
+begin
+  sorry
+end
 
 variable d : ℕ -- m'agradaria ficar que d ≥ 1 aquí
 local notation `E` := fin d → ℝ
