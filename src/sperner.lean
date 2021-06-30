@@ -142,8 +142,10 @@ h2 : ∀ (T : set X), T ⊆ S → metric.bounded T → metric.diam T ≤ ↑δ �
 variables {d : ℕ} [hd: 0 < d]
 local notation `E` := fin d → ℝ
 
+local notation `H`:= { x: E | (∑ (i : fin d), x i) = 1}
+
 -- S is the set of vertices of a simplex
-variables (S: set E) [hS: ∀ (s : E), s ∈ S → (∑ (i : fin d), s i) = 1]
+variables (S: set E) [hS: S ⊆ H] 
 
 variables (f: E → E) [hf: uniform_continuous_on f S]
 
@@ -152,11 +154,10 @@ variables (f: E → E) [hf: uniform_continuous_on f S]
 def is_sperner_triangle (f: E → E): Prop := 
   ∀ i: fin d, ∃ p: E, p ∈ S → (∀ j < i, (f p) j ≥  (p:E) j) ∧ (((f p) i) < p i)
 
-
-lemma ordered_vertices_implies_epsilon_fixed (S : set E)
+lemma ordered_vertices_implies_epsilon_fixed
 (f : E → E)
-(hS : ∀ (s : E), s ∈ S → (∑ (i : fin d), s i) = 1)
-(hf : uniform_continuous_on f (convex_hull S)) (ε : ennreal) (hε : (ε) > 0)
+(hf : uniform_continuous_on f (convex_hull S)) 
+(ε : ennreal) (hε : (ε) > 0)
 : ∃ δ > 0, ∀ T ⊆ S, emetric.diam T < δ ∧
 is_sperner_triangle S f
 → ∀ x ∈ T, edist (f x) x < ε :=
