@@ -159,7 +159,7 @@ lemma ordered_vertices_implies_epsilon_fixed (S : set E)
 (hf : uniform_continuous_on f (convex_hull S)) (ε : nnreal) (hε : 0 < ε)
 : ∃ δ > 0, ∀ T ⊆ S, emetric.diam T < δ ∧
 is_sperner_triangle S f
-→ ∃ x ∈ T, edist (f x) x < ε :=
+→ ∀ x ∈ T, edist (f x) x < ε :=
 begin
   sorry
 end
