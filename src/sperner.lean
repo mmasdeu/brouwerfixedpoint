@@ -104,8 +104,11 @@ begin
   ... = ε : by {ring},
 end
 
-lemma le_max_right_or_left {α : Type*} [linear_order α] (a b : α) : a ≤ min a b ∨ b ≤ min a b:=
+lemma le_min_right_or_left {α : Type*} [linear_order α] (a b : α) : a ≤ min a b ∨ b ≤ min a b :=
 by cases (le_total a b) with h; simp [true_or, le_min rfl.ge h]; exact or.inr h
+
+lemma max_le_right_or_left {α : Type*} [linear_order α] (a b : α) : max a b ≤ a ∨ max a b ≤ b :=
+by cases (le_total a b) with h; simp [true_or, max_le rfl.ge h]; exact or.inr h
 
 lemma edist_lt_of_diam_lt {X : Type*} [pseudo_metric_space X] (s : set X)  {d : ennreal} :
   emetric.diam s < d → ∀ (x ∈ s) (y ∈ s), edist x y < d :=
@@ -125,7 +128,7 @@ begin
   intros ε hε,
   set γ := min 1 (ε/2) with hhγ,
   have hγ : γ > 0,
-  { cases (le_max_right_or_left 1 (ε/2)),
+  { cases (le_min_right_or_left 1 (ε/2)),
     { exact lt_of_lt_of_le (ennreal.zero_lt_one) h },
     { exact lt_of_lt_of_le (ennreal.div_pos_iff.2 ⟨ne_of_gt hε, ennreal.two_ne_top⟩) h } },
   obtain ⟨δ, hδ, H⟩ := enndiameter_growth' hf γ hγ,

@@ -19,21 +19,14 @@ variables L: list E
 def face_baricentric_subdivision(L : list E): set E :=
   begin
     induction L with L' hL' smaller_dim_baricentric_subdivision,
-    {
-      exact (∅ : finset E),
-    },
-    {
-      let B := barycenter ↑L',
+    { exact (∅ : finset E) },
+    { haveI : has_lift_t (fin m → ℝ) (list (fin m → ℝ)) := ⟨λ x, [x]⟩,
+      exact {barycenter ↑L'} ∪ smaller_dim_baricentric_subdivision }
       
-      exact {B} ∪ smaller_dim_baricentric_subdivision,
-      
-      { -- no se perque haig de demostrar això.
-        fconstructor,
-        intro x,
-        exact [x],
-      },
-      
-    },
+      -- no se perque haig de demostrar això.
+      -- és una suposició que es necessitava al definir el barycenter, 
+      --   amb el haveI el lean l'integra i l'utilitza al exact
+    
     -- Definició recursiva
     -- Si L.length > 1,
     -- afegitm el punt `barycenter L` i tots els punts de `face_barycentric_subdivision L.tail`
