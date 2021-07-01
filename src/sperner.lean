@@ -121,8 +121,8 @@ lemma enndiameter_growth' {X : Type} [metric_space X] {S : set X}
   ⟨δ, hδ, λ R hR hdR, emetric.diam_image_le_iff.2 
   (λ x hx y hy, le_of_lt (H (hR hx) (hR hy) (edist_lt_of_diam_lt R hdR x hx y hy)))⟩
 
-lemma enndiameter_growth (X : Type) [metric_space X] (S : set X)
-  (f : X → X) (hf : uniform_continuous_on f S) : ∀ ε > 0,  ∃ δ > 0, 
+lemma enndiameter_growth {X : Type} [metric_space X] {S : set X}
+  {f : X → X} (hf : uniform_continuous_on f S) : ∀ ε > 0,  ∃ δ > 0, 
   ∀ T ⊆ S, emetric.diam T < δ → emetric.diam (f '' T) < ε :=
 begin
   intros ε hε,
