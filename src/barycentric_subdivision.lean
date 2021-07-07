@@ -7,9 +7,9 @@ variables {m n : ℕ}
 local notation `E` := fin m → ℝ
 
 noncomputable def barycenter(L: list E): E :=
-  (list.foldl (λ x:E , λ y:E, x + y) 0 L) / L.length
+  (list.foldl (λ x:E , λ y:E, x + y) (0 : E) L) / L.length
   
-variables L: list E
+variables (L : list E) [pseudo_metric_space E]
 
 #check L.tail
 #check barycenter ↑L
@@ -18,15 +18,9 @@ variables L: list E
 -- To do, afegir `[list.nodup L]`
 def face_baricentric_subdivision(L : list E): set E :=
   begin
-    induction L with L' hL' smaller_dim_baricentric_subdivision,
+    induction L with head tail smaller_dim_baricentric_subdivision,
     { exact (∅ : finset E) },
-    { haveI : has_lift_t (fin m → ℝ) (list (fin m → ℝ)) := ⟨λ x, [x]⟩,
-      exact {barycenter ↑L'} ∪ smaller_dim_baricentric_subdivision }
-      
-      -- no se perque haig de demostrar això.
-      -- és una suposició que es necessitava al definir el barycenter, 
-      --   amb el haveI el lean l'integra i l'utilitza al exact
-    
+    { exact {barycenter (list.cons head tail)} ∪ smaller_dim_baricentric_subdivision }
     -- Definició recursiva
     -- Si L.length > 1,
     -- afegitm el punt `barycenter L` i tots els punts de `face_barycentric_subdivision L.tail`
@@ -49,9 +43,8 @@ def face_baricentric_subdivision(L : list E): set E :=
 
 -- TODO: We need the diameter of the convexhull of A.
 -- TODO: We need to take the maximum of this finite set.
-def diameter_face (A : finset E): ℝ :=
-  sorry
---  {d | (∃ x y ∈ A, d = dist x y)}
+noncomputable def diameter_face  (A : set E) : ennreal :=
+  Sup {d | ∃ x y ∈ A, d = edist x y}
 
 
 open affine
