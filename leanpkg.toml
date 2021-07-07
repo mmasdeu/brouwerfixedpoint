@@ -1,8 +1,8 @@
 [package]
 name = "brouwerfixedpoint"
 version = "0.1"
-lean_version = "leanprover-community/lean:3.30.0"
+lean_version = "leanprover-community/lean:3.31.0"
 path = "src"
 
 [dependencies]
-mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "0faf086475589a6ad62045254711cd654b363c14"}
+mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "d7653b8dff5cae5d672f7fe77302da9ab9e0f051"}
