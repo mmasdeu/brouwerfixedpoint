@@ -6,13 +6,8 @@ import analysis.convex.basic
 import topology.sequences
 
 noncomputable theory
-open set
-open affine
-open topological_space
-
-open_locale affine
-open_locale filter
-open_locale big_operators
+open set affine topological_space
+open_locale affine filter big_operators
 
 variables  {V : Type*} [add_comm_group V] [module ℝ V]
 variables [affine_space V V]
@@ -150,34 +145,54 @@ begin
   sorry
 end
 
-variables {d : ℕ} [hd: 0 < d]
+variables {d : ℕ} [hd : 0 < d]
 local notation `E` := fin d → ℝ
 
-local notation `H`:= { x: E | (∑ (i : fin d), x i) = 1}
+def H := { x: E | (∑ (i : fin d), x i) = 1}
 
--- S is the set of vertices of a simplex
-variables (S: set E) [hS: S ⊆ H] 
 
-variables (f: E → E) [hf: uniform_continuous_on f S]
+variables (f: E → E)
+
+example (a b r : nnreal) (h1 : a ≤ b + r) (h2 : a ≥ b - r) : edist a b ≤ r :=
+begin
+  unfold edist,
+  sorry,
+end
 
 -- per tota coordenada i, existeix un vertex v tal que la coordenada i-èssima 
 -- és la primera que complex que f(v)_i < f(v)
-def is_sperner_triangle (f: E → E): Prop := 
-  ∀ i: fin d, ∃ p: E, p ∈ S → (∀ j < i, (f p) j ≥  (p:E) j) ∧ (((f p) i) < p i)
+def is_sperner_set (f: E → E) (S : set E)  := 
+  ∀ i: fin d, ∃ v : E, v ∈ S ∧
+  (∀ j < i, (f v) j ≥  (v j)) ∧ (((f v) i) < v i)
 
-lemma ordered_vertices_implies_epsilon_fixed
-(f : E → E)
-(hf : uniform_continuous_on f (convex_hull S)) 
-(ε : ennreal) (hε : (ε) > 0)
-: ∃ δ > 0, ∀ T ⊆ S, emetric.diam T < δ ∧
-is_sperner_triangle S f
-→ ∀ x ∈ T, edist (f x) x < ε :=
+lemma epsilon_fixed_condition
+{f : E → E} {S : set E} (hs : S ⊆ H)
+(hf : uniform_continuous_on f S) 
+{ε : ennreal} (hε : 0 < ε)
+: ∃ δ, 0 < δ ∧
+∀ T ⊆ S,
+  emetric.diam T < δ →
+  is_sperner_set f T →
+  ∀ x ∈ T, edist (f x) x < ε :=
 begin
   let ε₁ := ε / (2 * d),
-  have h₁ : ε₁ > 0 := by sorry, 
-  obtain ⟨δ₀, hδ₀⟩ := emetric.uniform_continuous_on_iff.mp hf ε₁ h₁,
+  have h₁ : 0 < ε₁ := by sorry,
+  obtain ⟨δ₀, hδ₀pos, hδ₀⟩ := emetric.uniform_continuous_on_iff.mp hf ε₁ h₁,
   let δ := min δ₀ (ε₁/2),
-  
-  sorry,
-
+  use δ,
+  split,
+  {
+    sorry
+  },
+  intros T hTS hdT hfT x hx,
+  have : ∀ (i : ℕ) (hi : i < d - 1),
+    edist ((f x) ⟨i, nat.lt_of_lt_pred hi⟩) (x ⟨i, nat.lt_of_lt_pred hi⟩) ≤
+      δ + (emetric.diam (f '' T)),
+  {
+    introv,
+    sorry
+  },
+  {
+    sorry
+  },
 end
