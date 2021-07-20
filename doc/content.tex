@@ -1,0 +1,190 @@
+\maketitle
+
+\begin{remark}
+  This text is meant as a blueprint for a proof of Brouwer's Fixed Point Theorem.
+\end{remark}
+
+We will follow~\cite{castellana2017} throughout.
+
+\section{Sperner's Lemma}
+
+\begin{definition}
+\label{is_sperner_colouring}
+\lean{is_sperner_colouring}
+\leanok
+%def is_sperner_colouring (S : simplicial_complex E)
+%  (f : E → fin m) : Prop :=
+%∀ (x : E) i, x ∈ S.points → x i = 0 → f x ≠ i
+
+\end{definition}
+
+
+\begin{lemma}
+  \label{sperner}
+  \lean{sperner}
+  \leanok
+%  theorem sperner {S : simplicial_complex (fin (m+1) → ℝ)}
+%  (hS₁ : S.space = std_simplex (fin (m+1))) (hS₂ : S.finite) (hS₃ : S.full_dimensional)
+%  {f} (hf : is_sperner_colouring S f) :
+%  ∃ X ∈ S.faces, panchromatic f X :=
+\end{lemma}
+
+\section{Brouwer's Fixed Point Theorem}
+
+\subsection{}
+Given $f\colon \Delta \to \Delta$ (where $\Delta$ is triangulated), we construct a coloring of the triangulation.
+
+\begin{definition}
+\label{def:induced_colouring}
+\lean{induced_colouring}
+Let $\Delta$ be a simplex. Given an ordered list of its vertices, and a function $f:\Delta \to \Delta$, the induced color of a point $x\in \Delta$ is $i=\min\{j ~|~ f(x)_j < x_j\}$.
+\end{definition}
+
+\begin{lemma}
+\label{induced_colouring_is_sperner_colouring}
+\lean{induced_colouring_is_sperner_colouring}
+\uses{def:induced_colouring, is_sperner_colouring}
+The coloring above is a Sperner coloring.
+\end{lemma}
+
+Apply the above to a triangulation of $\Delta$ of diameter $<\epsilon$, to get a panchromatic triangle of diameter $\epsilon$.
+
+\begin{lemma}
+\label{small_panchromatic_simplex_has_almost_fixed_point}
+\lean{small_panchromatic_simplex_has_almost_fixed_point}
+For all $\varepsilon>0$ exists $\delta>0$, such that given a panchromatic simplex $X\subseteq \Delta$ of a diameter $\leq \delta$ then $|f(x) - x| < \varepsilon,\ \forall x \in X$.
+\end{lemma}
+\begin{proof}
+By compactness, $f$ is uniformly continuous in $\Delta$. Then for all $\frac{\varepsilon}{2n}>0$ there exists $\delta_0>0$ such that  $diam(f(X)) < \frac{\varepsilon}{2n}$. We define $\delta:=\min(\delta_0,\frac{\varepsilon}{4n})$, that preserves the properties of $\delta$.\\
+Let $p_0, \ldots, p_n$ be the vertices of $X$. Then, since $X$ is panchromatic, for each $i = 0,\ldots,n-1$, $f(p_i)_i < (p_i)_i$ and $f(p_{i+1})_i \geq (p_{i+1})_i$.
+Then, for all $x \in X$,
+$$f(x)_i \leq f(p_i)_i + diam(f(X)) < (p_i)_i + diam(f(X)) \leq (x)_i + \delta + diam(f(X))$$ and $$f(x)_i \geq f(p_{i+1})_i - diam(f(X)) \geq (p_{i+1})_i - diam(f(X)) \geq (x)_i - \delta - diam(f(X))$$
+Putting them together,
+$$|f(x)_i - (x)_i| \leq \delta + diam(f(X)),\ \ i\in\{0,...,n-1\}$$ 
+Therefore, for all $x \in X$,
+$$|f(x)_n - (x)_n| = |(1 - f(x)_0 - \ldots - f(x)_{n-1}) - (1 - (x)_0 - \ldots - (x)_{n-1})| = $$
+$$ = |((x)_0 - f(x)_0) + \ldots + ((x)_n - f(x)_n)| \leq$$
+$$\leq |(x)_0 - f(x)_0| + \ldots + |(x)_n - f(x)_n| \leq (n-1)(\delta + diam(f(X)))$$\\
+Finally, for all $x \in X$,
+$$|f(x) - x| = \sqrt{(f(x)_0 - (x)_0)^2 + \ldots + (f(x)_{n-1} - (x)_{n-1})^2 + (f(x)_n - (x)_n)^2}$$
+$$\leq \sqrt{(1 + \ldots + 1 + (n - 1)^2)(\delta + diam(f(X))^2} = $$
+$$ = \sqrt{n(n-1)}(\delta + diam(f(X)) < \frac{\varepsilon}{n}\sqrt{n(n-1)} < \varepsilon\Longleftrightarrow |f(x)-x|<\varepsilon$$
+$ $
+\end{proof}
+
+\begin{lemma}
+\label{arbitrary_almost_fixed_points_implies_fixed_point}
+\lean{arbitrary_almost_fixed_points_implies_fixed_point}
+$f\colon X \to X$ continuous and $X$ compact metric space. Suppose that $\forall \epsilon >0$, there exists $x\in X$ such that $d(f(x),x) < \epsilon$. Then $f$ has a fixed point.
+\end{lemma}
+\begin{proof}
+Using the epsilons property, we can construct a sequance verifying the following inequality
+$$\left|f(x_n)-x_n\right|\leq\frac{1}{n}$$
+Because of the Bolzano-Weierstrass theorem, we know there exists a convergent subsequance $ x_ {k_n} $ of $ x_n $ satisfying,
+$$\left|f(x_{n_k})-x_{n_k}\right|\leq\frac{1}{n_k}$$
+Applying the limits in the inequality, we obtain the equality
+$$\left|\lim_{x\to \infty} f(x_{n_k})-x\right|\leq0\Longleftrightarrow \lim_{x\to \infty} f(x_{n_k})-x = 0\Longleftrightarrow \lim_{x\to \infty} f(x_{n_k}) = x$$
+Using the continuity property of limits we can conclude,
+$$f(x)=f\left(\lim_{x\to \infty} x_{n_k}\right)=\lim_{x\to \infty} f(x_{n_k})=x$$
+$ $
+\uses{compact_space.tendsto_subseq}
+\end{proof}
+
+Now we apply Sperner's lemma to deduce that there is a panchromatic face in the subdivision.
+
+\begin{definition}
+\label{barycenter}
+\lean{barycenter}
+The baricenter of points $p_1, \dots, p_k$ is $B(p_1, \dots, p_k)= \frac{1}{k}\sum_{i=1}^k p_i$
+\end{definition}
+
+\begin{definition}
+\label{barycentric_subdivision}
+\lean{barycentric_subdivision}
+\uses{barycenter}
+Let $S\subseteq \mathbb{R}^n$ be a $n$-dimensional simplex with barycentric coordinates $x_0,\ldots,x_n$. The barycentric subdivison is a map form permutations of the $n+1$ vertices of $S$ to $n$-dimensional simplexes defined as follows
+\[
+(p_0, p_1, \dots, p_n) \mapsto Simplex(B(p_0), B(p_0,p_1), \dots, B(p_0,p_1,\dots, p_n))
+\]
+
+See end of \verb|https://github.com/leanprover-community/mathlib/blob/sperner-again/src/combinatorics/simplicial_complex/subdivision.lean|
+\end{definition}
+
+\begin{lemma}
+  \label{diameter_simplex_is_longest_edge}
+  \lean{diameter_simplex_is_longest_edge}
+  Let $S$ be a $k$-dimensional simplex with vertices $v_0, \dots,  v_k$. The diameter of $S$ 
+   $ Diam(S)= \max_{x,y\in S} |x-y|$ equals $\max |v_i - v_j|$.
+\end{lemma}
+
+\begin{proof}
+ 
+  Since $v_i, v_j \in S$,  we have $Diam(S) \geq \max |v_i - v_j|$.
+
+  Let $l\max |v_i - v_j|$, and for each vertex consider 
+  the closed ball centered at $v_i$ and radius $l$.
+  \[
+    B_l(v_i) = \{x : |x-v_i|\leq l\}.
+  \]
+  Since $B_l(v_i)$ is convex, and it contains every vertex of $S$, we have
+  $|x-v_i|\leq l$ for all $x\in S$.
+
+  Finally we show $|x-y|\leq l$ for all $x, y\in S$.
+  Given $x\in S$, $B_l(x)$ contains all vertices of $S$, 
+  and since $B_l(x)$ is convex, it contains any $y\in S$.
+  Therefore $|x-y|\leq l$ for all $x, y\in S$.
+  This is $diam(S)\leq l$.
+  
+\end{proof}
+
+\begin{lemma} Let $\hat S = B(v_0,v_1,\dots, v_k)$ be the barycenter of $S$. We bound the distance of any vertex $v_i$ of $S$ to $\hat S$.
+  \label{diameter_barycentric_subdivision}
+  \lean{diameter_barycentric_subdivision}
+  \uses{barycentric_subdivision}
+  Given a simplex $S$ of diameter $D$, its barycentric subdivision has diameter at most $\frac{n}{n+1}D$
+\end{lemma}
+
+\begin{proof}
+  \uses{diameter_simplex_is_longest_edge}
+  The dinstance of any vertex of $S$ to its barycenter is bounded by
+
+  \[
+  |v_i - \hat S | = | v_i - \sum_{k=0}^k \frac{1}{n+1}v_k| \leq \sum_{t=0}^k \frac{1}{k+1}|v_i - v_t| \leq \frac{1}{n+1} D.
+  \]
+
+  Therefore, the closed ball centered at $\hat S$, of radius $\frac{p}{p+1}D$, contains the vertices of $S$, by convexity it contains $S$.
+
+  Finally we proof the result by strong induction, for $k=0$ the result is trivial.
+  If $s$ and $s'$ are faces of $S$ such that $s$ is a proper face of $s'$, 
+  \[
+    |\hat s -\hat s'| \leq (\frac{k}{k+1})diam(S).
+  \]
+  
+  % TODO
+
+\end{proof}
+
+
+\begin{lemma}
+\label{exists_small_subdivision_of_simplex}
+\lean{exists_small_subdivision_of_simplex}
+For all $\epsilon>0$, there exists a subdivision of $\Delta$ of diameter $<\epsilon$.
+\end{lemma}
+\begin{proof}
+\uses{barycentric_subdivision, diameter_barycentric_subdivision}
+
+\end{proof}
+
+
+
+
+%\begin{theorem}
+%  \label{comp_open}
+%  \lean{comp_open}
+%  \uses{comp_cont}
+%  \leanok
+%  The main theorem.
+%\end{theorem}
+%\begin{proof}
+%  This is the proof.
+%\end{proof}

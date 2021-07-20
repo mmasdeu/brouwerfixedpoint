@@ -1,0 +1,49 @@
+\documentclass{article}
+
+\usepackage[dep_graph, coverage, project=../project]{blueprint}
+
+\usepackage{amsfonts, amsthm, amssymb, amsmath}
+\usepackage{tikz-cd}
+
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}
+\newtheorem{theoremx}[theorem]{Theorem} % theorem not in dep graph
+\numberwithin{theorem}{section}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{defprop}[theorem]{Definition/Proposition}
+
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{warning}[theorem]{Warning}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}[theorem]{Examples}
+\newtheorem{observation}[theorem]{Observation}
+
+
+\date{\today}
+
+\setcounter{tocdepth}{1}
+
+\title{Blueprint for Brouwer's Fixed Point Theorem}
+
+\author{}
+
+\home{https://github.com/mmasdeu/brouwerfixedpoint}
+\github{https://github.com/mmasdeu/brouwerfixedpoint/}
+
+\begin{document}
+\input{content}
+
+\bibliographystyle{amsalpha}
+
+\bibliography{Brouwer}
+\end{document}
+
