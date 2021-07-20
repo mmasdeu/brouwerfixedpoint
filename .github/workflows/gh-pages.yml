@@ -26,9 +26,7 @@ jobs:
 
       - name: Link and fetch mathlib
         run: |
-          leanproject get mmasdeu/brouwerfixedpoint
-          ln -s brouwerfixedpoint project
-          cd project && leanproject build && cd ..
+          leanproject build
           inv decls
 
       - name: Install Leanblueprint and generate web in tex env
