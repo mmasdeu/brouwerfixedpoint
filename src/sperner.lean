@@ -1,12 +1,13 @@
 import tactic
 import data.set.finite
 import data.real.basic
+import data.real.ereal
 import linear_algebra.affine_space.independent
 import analysis.convex.basic
 import topology.sequences
 
 noncomputable theory
-open set affine topological_space
+open set affine topological_space 
 open_locale affine filter big_operators
 
 variables  {V : Type*} [add_comm_group V] [module ℝ V]
@@ -105,18 +106,18 @@ by cases (le_total a b) with h; simp [true_or, le_min rfl.ge h]; exact or.inr h
 lemma max_le_right_or_left {α : Type*} [linear_order α] (a b : α) : max a b ≤ a ∨ max a b ≤ b :=
 by cases (le_total a b) with h; simp [true_or, max_le rfl.ge h]; exact or.inr h
 
-lemma edist_lt_of_diam_lt {X : Type*} [pseudo_metric_space X] (s : set X)  {d : ennreal} :
+lemma edist_lt_of_diam_lt {X : Type*} [pseudo_emetric_space X] (s : set X)  {d : ennreal} :
   emetric.diam s < d → ∀ (x ∈ s) (y ∈ s), edist x y < d :=
 λ h x hx y hy, gt_of_gt_of_ge h (emetric.edist_le_diam_of_mem hx hy)
 
-lemma enndiameter_growth' {X : Type} [metric_space X] {S : set X}
+lemma enndiameter_growth' {X : Type} [pseudo_emetric_space X] {S : set X}
   {f : X → X} (hf : uniform_continuous_on f S) : ∀ ε > 0,  ∃ δ > 0, 
   ∀ T ⊆ S, emetric.diam T < δ → emetric.diam (f '' T) ≤ ε :=
 λ ε hε, let ⟨δ, hδ, H⟩ := emetric.uniform_continuous_on_iff.1 hf ε hε in
   ⟨δ, hδ, λ R hR hdR, emetric.diam_image_le_iff.2 
   (λ x hx y hy, le_of_lt (H (hR hx) (hR hy) (edist_lt_of_diam_lt R hdR x hx y hy)))⟩
 
-lemma enndiameter_growth {X : Type} [metric_space X] {S : set X}
+lemma enndiameter_growth {X : Type} [pseudo_emetric_space X] {S : set X}
   {f : X → X} (hf : uniform_continuous_on f S) : ∀ ε > 0,  ∃ δ > 0, 
   ∀ T ⊆ S, emetric.diam T < δ → emetric.diam (f '' T) < ε :=
 begin
@@ -145,7 +146,7 @@ begin
   sorry
 end
 
-variables {d : ℕ} [hd : 0 < d]
+variables {d : ℕ}
 local notation `E` := fin d → ℝ
 
 def H := { x: E | (∑ (i : fin d), x i) = 1}
@@ -153,11 +154,24 @@ def H := { x: E | (∑ (i : fin d), x i) = 1}
 
 variables (f: E → E)
 
-example (a b r : nnreal) (h1 : a ≤ b + r) (h2 : a ≥ b - r) : edist a b ≤ r :=
+example (a b : real) (r : ennreal) (h1 : (a : ereal) ≤ (b : ereal) + r) (h2 : (a : ereal) ≥ (b : ereal) - r) :
+  ennreal.of_real (abs (a - b)) ≤ r :=
 begin
-  unfold edist,
-  sorry,
+  sorry
 end
+
+lemma points_coordinates_bounded_distance (x y : E) (i : fin d) :
+  ennreal.of_real (abs (x i - y i)) ≤ edist x y :=
+begin
+  sorry
+end
+
+lemma points_coordinates_bounded_diam (S : set E) (x y : E) (hx : x ∈ S) (hy : y ∈ S)
+(i : fin d) : ennreal.of_real (abs (x i - y i)) ≤ emetric.diam S :=
+begin
+  sorry
+end
+
 
 -- per tota coordenada i, existeix un vertex v tal que la coordenada i-èssima 
 -- és la primera que complex que f(v)_i < f(v)
@@ -166,33 +180,42 @@ def is_sperner_set (f: E → E) (S : set E)  :=
   (∀ j < i, (f v) j ≥  (v j)) ∧ (((f v) i) < v i)
 
 lemma epsilon_fixed_condition
-{f : E → E} {S : set E} (hs : S ⊆ H)
+{f : E → E} {S : set E} (hs : S ⊆ H) (hd : 0 < d)
 (hf : uniform_continuous_on f S) 
-{ε : ennreal} (hε : 0 < ε)
+{ε : real} (hε : 0 < ε)
 : ∃ δ, 0 < δ ∧
 ∀ T ⊆ S,
-  emetric.diam T < δ →
+  metric.bounded T → metric.diam T < δ →
   is_sperner_set f T →
-  ∀ x ∈ T, edist (f x) x < ε :=
+  ∀ x ∈ T, dist (f x) x < ε :=
 begin
   let ε₁ := ε / (2 * d),
   have h₁ : 0 < ε₁ := by sorry,
-  obtain ⟨δ₀, hδ₀pos, hδ₀⟩ := emetric.uniform_continuous_on_iff.mp hf ε₁ h₁,
+  obtain ⟨δ₀, hδ₀pos, hδ₀⟩ := metric.uniform_continuous_on_iff.mp hf ε₁ h₁,
   let δ := min δ₀ (ε₁/2),
   use δ,
   split,
   {
     sorry
   },
-  intros T hTS hdT hfT x hx,
-  have : ∀ (i : ℕ) (hi : i < d - 1),
-    edist ((f x) ⟨i, nat.lt_of_lt_pred hi⟩) (x ⟨i, nat.lt_of_lt_pred hi⟩) ≤
-      δ + (emetric.diam (f '' T)),
+  intros T hTS hbT hdT hfT x hx,
+  have hmost : ∀ (i : fin d) (hi : (i : ℕ) ≠ d-1),
+    abs (((f x) i)-(x i))
+     ≤ δ + (metric.diam (f '' T)),
   {
-    introv,
+    intros i hi,
+    rw abs_sub_le_iff,
+    split,
+    {
+      sorry
+    },
+    {
+      sorry
+    }
+  },
+  have hlast : abs(((f x) ⟨d-1, buffer.lt_aux_2 hd⟩)) - x ⟨d-1, buffer.lt_aux_2 hd⟩ ≤ (d-1) * (δ + (metric.diam (f '' T))),
+  {
     sorry
   },
-  {
-    sorry
-  },
+  sorry
 end
