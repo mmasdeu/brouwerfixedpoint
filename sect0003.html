@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="next" href="sect0004.html" title="Bibliography" />
+<link rel="prev" href="sect0002.html" title="Brouwer’s Fixed Point Theorem" />
+<link rel="up" href="sect0002.html" title="Brouwer’s Fixed Point Theorem" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">Blueprint for Brouwer’s Fixed Point Theorem</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="sect0001.html"><span class="toc_ref">1</span> <span class="toc_entry">Sperner’s Lemma</span></a>
+ </li>
+<li class=" active">
+  <a href="sect0002.html"><span class="toc_ref">2</span> <span class="toc_entry">Brouwer’s Fixed Point Theorem</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class=" active current">
+  <a href="sect0003.html"><span class="toc_ref">2.1</span> <span class="toc_entry"></span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="sect0004.html"><span class="toc_ref">3</span> <span class="toc_entry">Bibliography</span></a>
+ </li>
+  <li></li>	
+  <li>	
+  <a href="dep_graph.html">Dependency graph</a>
+  </li>
+  <li>	
+  <a href="https://github.com/mmasdeu/brouwerfixedpoint">Project home</a>
+  </li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h2 id="a0000000004">2.1 </h2>
+<p> Given \(f\colon \Delta \to \Delta \) (where \(\Delta \) is triangulated), we construct a coloring of the triangulation. </p>
+<p><div class="definition_thmwrapper" id="def:induced_colouring">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">2.1</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#def:induced_colouring">#</a>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>  Let \(\Delta \) be a simplex. Given an ordered list of its vertices, and a function \(f:\Delta \to \Delta \), the induced color of a point \(x\in \Delta \) is \(i=\min \{ j ~ |~  f(x)_j {\lt} x_j\} \). </p>
+
+  </div>
+</div> </p>
+<p><div class="lemma_thmwrapper" id="induced_colouring_is_sperner_colouring">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.2</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#induced_colouring_is_sperner_colouring">#</a>
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+          <li><a href="sect0003.html#def:induced_colouring">Definition 2.1</a></li>
+          <li><a href="sect0001.html#is_sperner_colouring">Definition 1.1</a></li>
+        </ul>
+
+      </div>
+    </div>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>   The coloring above is a Sperner coloring. </p>
+
+  </div>
+</div> </p>
+<p>Apply the above to a triangulation of \(\Delta \) of diameter \({\lt}\epsilon \), to get a panchromatic triangle of diameter \(\epsilon \). </p>
+<p><div class="lemma_thmwrapper" id="small_panchromatic_simplex_has_almost_fixed_point">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.3</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#small_panchromatic_simplex_has_almost_fixed_point">#</a>
+    <a class="icon proof" href="sect0003.html#a0000000007"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>  For all \(\varepsilon {\gt}0\) exists \(\delta {\gt}0\), such that given a panchromatic simplex \(X\subseteq \Delta \) of a diameter \(\leq \delta \) then \(|f(x) - x| {\lt} \varepsilon ,\  \forall x \in X\). </p>
+
+  </div>
+</div> </p>
+<div class="proof_wrapper" id="a0000000007">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p>By compactness, \(f\) is uniformly continuous in \(\Delta \). Then for all \(\frac{\varepsilon }{2n}{\gt}0\) there exists \(\delta _0{\gt}0\) such that \(diam(f(X)) {\lt} \frac{\varepsilon }{2n}\). We define \(\delta :=\min (\delta _0,\frac{\varepsilon }{4n})\), that preserves the properties of \(\delta \).<br />Let \(p_0, \ldots , p_n\) be the vertices of \(X\). Then, since \(X\) is panchromatic, for each \(i = 0,\ldots ,n-1\), \(f(p_i)_i {\lt} (p_i)_i\) and \(f(p_{i+1})_i \geq (p_{i+1})_i\). Then, for all \(x \in X\), </p>
+<div class="displaymath" id="a0000000008">
+  \[ f(x)_i \leq f(p_i)_i + diam(f(X)) {\lt} (p_i)_i + diam(f(X)) \leq (x)_i + \delta + diam(f(X)) \]
+</div>
+<p> and </p>
+<div class="displaymath" id="a0000000009">
+  \[ f(x)_i \geq f(p_{i+1})_i - diam(f(X)) \geq (p_{i+1})_i - diam(f(X)) \geq (x)_i - \delta - diam(f(X)) \]
+</div>
+<p> Putting them together, </p>
+<div class="displaymath" id="a0000000010">
+  \[ |f(x)_i - (x)_i| \leq \delta + diam(f(X)),\  \  i\in \{ 0,...,n-1\}  \]
+</div>
+<p> Therefore, for all \(x \in X\), </p>
+<div class="displaymath" id="a0000000011">
+  \[ |f(x)_n - (x)_n| = |(1 - f(x)_0 - \ldots - f(x)_{n-1}) - (1 - (x)_0 - \ldots - (x)_{n-1})| =  \]
+</div>
+<div class="displaymath" id="a0000000012">
+  \[  = |((x)_0 - f(x)_0) + \ldots + ((x)_n - f(x)_n)| \leq  \]
+</div>
+<div class="displaymath" id="a0000000013">
+  \[ \leq |(x)_0 - f(x)_0| + \ldots + |(x)_n - f(x)_n| \leq (n-1)(\delta + diam(f(X))) \]
+</div>
+<p><br />Finally, for all \(x \in X\), </p>
+<div class="displaymath" id="a0000000014">
+  \[ |f(x) - x| = \sqrt{(f(x)_0 - (x)_0)^2 + \ldots + (f(x)_{n-1} - (x)_{n-1})^2 + (f(x)_n - (x)_n)^2} \]
+</div>
+<div class="displaymath" id="a0000000015">
+  \[ \leq \sqrt{(1 + \ldots + 1 + (n - 1)^2)(\delta + diam(f(X))^2} =  \]
+</div>
+<div class="displaymath" id="a0000000016">
+  \[  = \sqrt{n(n-1)}(\delta + diam(f(X)) {\lt} \frac{\varepsilon }{n}\sqrt{n(n-1)} {\lt} \varepsilon \Longleftrightarrow |f(x)-x|{\lt}\varepsilon  \]
+</div>
+<p> \( \) </p>
+
+  </div>
+</div>
+<p><div class="lemma_thmwrapper" id="arbitrary_almost_fixed_points_implies_fixed_point">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.4</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#arbitrary_almost_fixed_points_implies_fixed_point">#</a>
+    <a class="icon proof" href="sect0003.html#a0000000017"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>  \(f\colon X \to X\) continuous and \(X\) compact metric space. Suppose that \(\forall \epsilon {\gt}0\), there exists \(x\in X\) such that \(d(f(x),x) {\lt} \epsilon \). Then \(f\) has a fixed point. </p>
+
+  </div>
+</div> </p>
+<div class="proof_wrapper" id="a0000000017">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p>Using the epsilons property, we can construct a sequance verifying the following inequality </p>
+<div class="displaymath" id="a0000000018">
+  \[ \left|f(x_n)-x_n\right|\leq \frac{1}{n} \]
+</div>
+<p> Because of the Bolzano-Weierstrass theorem, we know there exists a convergent subsequance \( x_{k_n} \) of \( x_n \) satisfying, </p>
+<div class="displaymath" id="a0000000019">
+  \[ \left|f(x_{n_k})-x_{n_k}\right|\leq \frac{1}{n_k} \]
+</div>
+<p> Applying the limits in the inequality, we obtain the equality </p>
+<div class="displaymath" id="a0000000020">
+  \[ \left|\lim _{x\to \infty } f(x_{n_k})-x\right|\leq 0\Longleftrightarrow \lim _{x\to \infty } f(x_{n_k})-x = 0\Longleftrightarrow \lim _{x\to \infty } f(x_{n_k}) = x \]
+</div>
+<p> Using the continuity property of limits we can conclude, </p>
+<div class="displaymath" id="a0000000021">
+  \[ f(x)=f\left(\lim _{x\to \infty } x_{n_k}\right)=\lim _{x\to \infty } f(x_{n_k})=x \]
+</div>
+<p> \( \)  </p>
+
+  </div>
+</div>
+<p>Now we apply Sperner’s lemma to deduce that there is a panchromatic face in the subdivision. </p>
+<p><div class="definition_thmwrapper" id="barycenter">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">2.5</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#barycenter">#</a>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>  The baricenter of points \(p_1, \dots , p_k\) is \(B(p_1, \dots , p_k)= \frac{1}{k}\sum _{i=1}^k p_i\) </p>
+
+  </div>
+</div> </p>
+<p><div class="definition_thmwrapper" id="barycentric_subdivision">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">2.6</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#barycentric_subdivision">#</a>
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+          <li><a href="sect0003.html#barycenter">Definition 2.5</a></li>
+        </ul>
+
+      </div>
+    </div>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>   Let \(S\subseteq \mathbb {R}^n\) be a \(n\)-dimensional simplex with barycentric coordinates \(x_0,\ldots ,x_n\). The barycentric subdivison is a map form permutations of the \(n+1\) vertices of \(S\) to \(n\)-dimensional simplexes defined as follows </p>
+<div class="displaymath" id="a0000000022">
+  \[  (p_0, p_1, \dots , p_n) \mapsto Simplex(B(p_0), B(p_0,p_1), \dots , B(p_0,p_1,\dots , p_n))  \]
+</div>
+<p>See end of <code class="verbatim">https://github.com/leanprover-community/mathlib/blob/sperner-again/src/combinatorics/simplicial_complex/subdivision.lean</code> </p>
+
+  </div>
+</div> </p>
+<p><div class="lemma_thmwrapper" id="diameter_simplex_is_longest_edge">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.7</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#diameter_simplex_is_longest_edge">#</a>
+    <a class="icon proof" href="sect0003.html#a0000000023"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>  Let \(S\) be a \(k\)-dimensional simplex with vertices \(v_0, \dots , v_k\). The diameter of \(S\) \( Diam(S)= \max _{x,y\in S} |x-y|\) equals \(\max |v_i - v_j|\). </p>
+
+  </div>
+</div> </p>
+<div class="proof_wrapper" id="a0000000023">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p>Since \(v_i, v_j \in S\), we have \(Diam(S) \geq \max |v_i - v_j|\). </p>
+<p>Let \(l\max |v_i - v_j|\), and for each vertex consider the closed ball centered at \(v_i\) and radius \(l\). </p>
+<div class="displaymath" id="a0000000024">
+  \[  B_l(v_i) = \{ x : |x-v_i|\leq l\} .  \]
+</div>
+<p> Since \(B_l(v_i)\) is convex, and it contains every vertex of \(S\), we have \(|x-v_i|\leq l\) for all \(x\in S\). </p>
+<p>Finally we show \(|x-y|\leq l\) for all \(x, y\in S\). Given \(x\in S\), \(B_l(x)\) contains all vertices of \(S\), and since \(B_l(x)\) is convex, it contains any \(y\in S\). Therefore \(|x-y|\leq l\) for all \(x, y\in S\). This is \(diam(S)\leq l\). </p>
+
+  </div>
+</div>
+<p><div class="lemma_thmwrapper" id="diameter_barycentric_subdivision">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.8</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#diameter_barycentric_subdivision">#</a>
+    <a class="icon proof" href="sect0003.html#a0000000025"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+          <li><a href="sect0003.html#barycentric_subdivision">Definition 2.6</a></li>
+        </ul>
+
+      </div>
+    </div>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>Let \(\hat S = B(v_0,v_1,\dots , v_k)\) be the barycenter of \(S\). We bound the distance of any vertex \(v_i\) of \(S\) to \(\hat S\).    Given a simplex \(S\) of diameter \(D\), its barycentric subdivision has diameter at most \(\frac{n}{n+1}D\) </p>
+
+  </div>
+</div> </p>
+<div class="proof_wrapper" id="a0000000025">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  <p> The dinstance of any vertex of \(S\) to its barycenter is bounded by </p>
+<div class="displaymath" id="a0000000026">
+  \[  |v_i - \hat S | = | v_i - \sum _{k=0}^k \frac{1}{n+1}v_k| \leq \sum _{t=0}^k \frac{1}{k+1}|v_i - v_t| \leq \frac{1}{n+1} D.  \]
+</div>
+<p>Therefore, the closed ball centered at \(\hat S\), of radius \(\frac{p}{p+1}D\), contains the vertices of \(S\), by convexity it contains \(S\). </p>
+<p>Finally we proof the result by strong induction, for \(k=0\) the result is trivial. If \(s\) and \(s'\) are faces of \(S\) such that \(s\) is a proper face of \(s'\), </p>
+<div class="displaymath" id="a0000000027">
+  \[  |\hat s -\hat s'| \leq (\frac{k}{k+1})diam(S).  \]
+</div>
+
+  </div>
+</div>
+<p><div class="lemma_thmwrapper" id="exists_small_subdivision_of_simplex">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">2.9</span>
+    <div class="thm_icons">
+    <a class="icon proof" href="sect0003.html#exists_small_subdivision_of_simplex">#</a>
+    <a class="icon proof" href="sect0003.html#a0000000028"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    <button class="modal lean">L∃∀N</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+                <ul class="uses">
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>  For all \(\epsilon {\gt}0\), there exists a subdivision of \(\Delta \) of diameter \({\lt}\epsilon \). </p>
+
+  </div>
+</div> </p>
+<div class="proof_wrapper" id="a0000000028">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▼</span>
+  </div>
+  <div class="proof_content">
+  
+
+  </div>
+</div>
+
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <a href="sect0002.html" title="Brouwer’s Fixed Point Theorem"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="sect0002.html" title="Brouwer’s Fixed Point Theorem"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="sect0004.html" title="Bibliography"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+</body>
+</html>
