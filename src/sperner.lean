@@ -38,7 +38,7 @@ begin
   have ha : ∀ n, dist (a n) (f (a n)) < 1 / ((n+1) : ℝ) :=
     λ n, classical.some_spec (h (1 / ((n+1) : ℝ)) (hpos n)),
   have exists_lim : ∃ (z ∈ univ) (Φ : ℕ → ℕ),
-  strict_mono Φ ∧ filter.tendsto (a ∘ Φ) filter.at_top (nhds z),
+    strict_mono Φ ∧ filter.tendsto (a ∘ Φ) filter.at_top (nhds z),
   {
     apply hsq.seq_compact_univ,
     exact λ n, by tauto,
@@ -77,11 +77,7 @@ begin
     intros m hm,
     specialize ha (Φ m),
     have hmn : 1 / ((m + 1) : ℝ) ≤ 1 / ((n + 1) : ℝ), by apply nat.one_div_le_one_div hm,
-    have hinc : 1 / ((Φ m) + 1:ℝ) ≤ 1 / ((m + 1):ℝ),
-    {
-      have h' : m ≤ Φ m := strict_mono.id_le hΦ1 m,
-      apply nat.one_div_le_one_div h',
-    },
+    have hinc : 1 / ((Φ m) + 1:ℝ) ≤ 1 / ((m + 1):ℝ), by exact nat.one_div_le_one_div (strict_mono.id_le hΦ1 m),
     linarith,
   },
   have H3 : ∃ (n : ℕ), ∀ m ≥ n, dist (f ((a∘Φ) m)) (f z) < ε/3 := 
@@ -128,14 +124,12 @@ begin
     { exact lt_of_lt_of_le (ennreal.zero_lt_one) h },
     { exact lt_of_lt_of_le (ennreal.div_pos_iff.2 ⟨ne_of_gt hε, ennreal.two_ne_top⟩) h } },
   obtain ⟨δ, hδ, H⟩ := enndiameter_growth' hf γ hγ,
-  use δ, split, exact hδ,
-  intros R hR hdR,
   have hγε: γ < ε,
   { cases (lt_or_ge 1 ε),
     { exact lt_of_le_of_lt (min_le_left 1 (ε/2)) h },
     { have hεtop := ne_of_lt (lt_of_le_of_lt h (lt_of_le_of_ne le_top ennreal.one_ne_top)),
       exact lt_of_le_of_lt (min_le_right 1 (ε/2)) (ennreal.half_lt_self (ne_of_gt hε) hεtop) } },
-  exact lt_of_le_of_lt (H R hR hdR) hγε,
+  exact ⟨δ, hδ, (λ R hR hdR, lt_of_le_of_lt (H R hR hdR) hγε)⟩,
 end
 
 lemma diameter_growth (X : Type) [metric_space X] (S : set X)
@@ -190,14 +184,14 @@ lemma epsilon_fixed_condition
   ∀ x ∈ T, dist (f x) x < ε :=
 begin
   let ε₁ := ε / (2 * d),
-  have h₁ : 0 < ε₁ := by sorry,
+  have h₁ := div_pos hε (mul_pos zero_lt_two (nat.cast_pos.mpr hd)),
   obtain ⟨δ₀, hδ₀pos, hδ₀⟩ := metric.uniform_continuous_on_iff.mp hf ε₁ h₁,
   let δ := min δ₀ (ε₁/2),
   use δ,
   split,
-  {
-    sorry
-  },
+  { cases le_min_right_or_left δ₀ (ε₁/2),
+    { exact gt_of_ge_of_gt h hδ₀pos },
+    { exact lt_min hδ₀pos (half_pos h₁) } },
   intros T hTS hbT hdT hfT x hx,
   have hmost : ∀ (i : fin d) (hi : (i : ℕ) ≠ d-1),
     abs (((f x) i)-(x i))
