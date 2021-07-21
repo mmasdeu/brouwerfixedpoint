@@ -9,7 +9,7 @@ import combinatorics.simplicial_complex.subdivision
 namespace affine
 open set
 variables {m n : ℕ} {E : Type*} [normed_group E] [normed_space ℝ E] {S : simplicial_complex E}
-  {X Y : finset E} {A : set (finset E)}
+  {X Y : finset E} {A : set (finset E)} [semilattice_inf_bot (finset E)]
 
 def simplicial_complex.on_boundary (S : simplicial_complex E) (X : finset E) :
   Prop :=

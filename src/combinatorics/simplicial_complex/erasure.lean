@@ -4,11 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Yaël Dillies, Bhavik Mehta
 -/
 import combinatorics.simplicial_complex.link
+import data.set.basic
 
 namespace affine
 open set
 variables {E : Type*} [normed_group E] [normed_space ℝ E] {S : simplicial_complex E}
-  {A : set (finset E)}
+  {A : set (finset E)} [semilattice_inf_bot (finset E)]
 
 /--
 The erasure of a simplicial complex S and a set A is the subcomplex obtained after removing all
@@ -19,7 +20,7 @@ def simplicial_complex.erasure (S : simplicial_complex E) (A : set (finset E)) :
 simplicial_complex.of_surcomplex
   {X | X ∈ S.faces ∧ ∀ {W}, W ∈ A → disjoint W X}
   (λ X hX, hX.1)
-  (λ X Y ⟨hX, hXA⟩ hYX, ⟨S.down_closed hX hYX, λ Z hZ, finset.disjoint_of_subset_right hYX (hXA hZ)⟩)
+  (λ X Y ⟨hX, hXA⟩ hYX, ⟨S.down_closed hX hYX, λ Z hZ, sorry⟩)
 /-Previous def
 def simplicial_complex.erasure (S : simplicial_complex E) (A : set (finset E)) :
   simplicial_complex E :=
@@ -46,6 +47,7 @@ end
 lemma erasure_and_closure_star_partition :
   S.faces = (S.erasure A).faces ∪ S.star ((S.closure A).faces \ {∅}) :=
 begin
+  /-
   ext X,
   split,
   { rintro hX,
@@ -68,6 +70,8 @@ begin
       exact finset.subset.trans hx (finset.inter_subset_right W X) }},
   { rintro (hX | hX);
     exact hX.1 }
+    -/
+    sorry
 end
 
 end affine

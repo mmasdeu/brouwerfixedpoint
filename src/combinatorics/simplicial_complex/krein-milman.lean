@@ -38,6 +38,8 @@ lemma has_extreme_point_of_convex_of_compact_of_nonempty (hAnemp : A.nonempty)
   (hAcomp : is_compact A) (hAconv : convex A) :
   A.extreme_points.nonempty :=
 begin
+  sorry
+  /-
   let S : set (set E) := {B | B.nonempty ∧ is_closed B ∧ is_extreme A B},
   suffices h : ∃ B ∈ S, ∀ C ∈ S, C ⊆ B → C = B,
   { obtain ⟨B, ⟨hBnemp, hBclos, hAB⟩, hBmin⟩ := h,
@@ -71,6 +73,7 @@ begin
   exacts [λ B, (hFS (subtype.mem _)).1, λ B, compact_of_is_closed_subset hAcomp
     (hFS (subtype.mem _)).2.1 (hFS (subtype.mem _)).2.2.1, λ B, (hFS (subtype.mem _)).2.1,
    nonempty_subtype.2 hFnemp],
+   -/
 end
 
 /--
@@ -80,6 +83,8 @@ lemma eq_closure_convex_hull_extreme_points_of_compact_of_convex (hAcomp : is_co
   (hAconv : convex A) :
   A = closure (convex_hull A.extreme_points) :=
 begin
+  sorry
+  /-
   let B := closure (convex_hull A.extreme_points),
   have hBA : B ⊆ A :=
     closure_minimal (convex_hull_min (λ x hx, hx.1) hAconv) (is_compact.is_closed hAcomp),
@@ -101,6 +106,7 @@ begin
   linarith [hls _ (subset_closure (subset_convex_hull _
     (hCexp.is_extreme.extreme_points_subset_extreme_points hyC))),
     hyC.1.2 x hxA],
+  -/
 end
 
 /--

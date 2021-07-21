@@ -10,6 +10,7 @@ namespace affine
 open set
 variables {m n k : ℕ} {E : Type*} [normed_group E] [normed_space ℝ E]
   {S : simplicial_complex E} {X Y : finset E} {A : set (finset E)}
+  [semilattice_inf_bot (finset E)] [decidable_eq E]
 
 def simplicial_complex.link (S : simplicial_complex E) (A : set (finset E)) :
   simplicial_complex E :=
@@ -19,7 +20,9 @@ def simplicial_complex.link (S : simplicial_complex E) (A : set (finset E)) :
     rintro X W ⟨hXdisj, Y, Z, hY, hZ, hXZ, hYZ⟩ hWX,
     split,
     { rintro V hV,
-      exact finset.disjoint_of_subset_right hWX (hXdisj hV), },
+     -- exact finset.disjoint_of_subset_right hWX (hXdisj hV), 
+     sorry
+    },
     { exact ⟨Y, Z, hY, hZ, subset.trans hWX hXZ, hYZ⟩ }
   end,
   disjoint := λ X X' ⟨hXdisj, Y, Z, hY, hZ, hXZ, hYZ⟩ ⟨hXdisj', Y', Z', hY', hZ', hXZ', hYZ'⟩,
@@ -35,6 +38,7 @@ end
 lemma link_singleton_empty :
   S.link {∅} = S :=
 begin
+  /-
   ext X,
   split,
   {
@@ -49,6 +53,8 @@ begin
       exact finset.disjoint_empty_left X, },
     exact ⟨∅, X, rfl, hX, subset.refl X, empty_subset X⟩,
   }
+  -/
+  sorry
 end
 
 lemma mem_link_singleton_iff :
@@ -68,7 +74,9 @@ begin
   { exact ⟨W, Z, mem_singleton W, hZ, hYZ, hWZ⟩, },
   { rintro h,
     rw mem_star_singleton_iff at h,
-    exact hX (disjoint_self.1 (finset.disjoint_of_subset_right h.2 hY)), }
+    --exact hX (disjoint_self.1 (finset.disjoint_of_subset_right h.2 hY)), }
+    sorry
+  }
 end
 
 lemma link_singleton_eq_Star_minus_star_iff_singleton (hX : X ≠ ∅) :
@@ -79,6 +87,8 @@ begin
     sorry --true? The PDF claims so but I'm not sure
   },
   {
+    sorry
+    /-
     rintro hXcard,
     apply subset.antisymm (link_singleton_subset hX),
     rintro Y ⟨h, hYstar⟩,
@@ -96,6 +106,7 @@ begin
       exact ⟨S.down_closed hZ hYZ, hx⟩,
     },
     exact ⟨X, Z, rfl, hZ, hYZ, hXZ⟩,
+    -/
   }
 end
 
@@ -106,9 +117,11 @@ lemma link_subset :
 lemma link_eq_Star_sub_star_closure {S : simplicial_complex E} {A : set (finset E)} :
   (S.link A).faces = (S.Star A).faces \ S.star ((S.closure A).faces \ {∅}) :=
 begin
+  /-
   ext X,
   split,
   {
+   
     rintro ⟨hXdisj, hXStar⟩,
     use hXStar,
     rintro ⟨hX, Y, ⟨⟨hY, Z, hZ, hYZ⟩, (hYnonempty : Y ≠ ∅)⟩, hYX⟩,
@@ -141,6 +154,8 @@ begin
     },
     { exact hXStar }
   }
+  -/
+  sorry
 end
 /-
 

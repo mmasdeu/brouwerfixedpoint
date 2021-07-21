@@ -376,7 +376,7 @@ lemma simplex_combi_interiors_split_interiors (hY : affine_independent ℝ (λ p
   ∃ Z ⊆ Y, combi_interior X ⊆ combi_interior Z :=
 begin
   let S := simplicial_complex.of_simplex hY,
-  let F := Y.powerset.filter (λ W : finset E, (X : set E) ⊆ convex_hull W),
+  --let F := Y.powerset.filter (λ W : finset E, (X : set E) ⊆ convex_hull W),
   sorry
   /-obtain ⟨Z, hZ, hZmin⟩ := finset.inf' _
   (begin

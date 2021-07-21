@@ -14,7 +14,7 @@ variables {E : Type*} [normed_group E] [normed_space ℝ E] {x : E} {X Y : finse
 /-! ### Polyhedrons -/
 
 /-- A polyhedron is an intersection of finitely many halfspaces. -/
-structure polyhedron (E : Type*) [normed_group E] [normed_space ℝ E] :=
+noncomputable structure polyhedron (E : Type*) [normed_group E] [normed_space ℝ E] :=
 (carrier : set E)
 (hcarrier : ∃ Hrepr : finset ((E →L[ℝ] ℝ) × ℝ), carrier = {x | ∀ l ∈ Hrepr, (l.2 : ℝ) ≤ l.1 x})
 
@@ -108,6 +108,8 @@ def faces (P : polyhedron E) : set (polyhedron E) :=
 
 lemma is_exposed_of_mem_faces {P Q : polyhedron E} (hQ : Q ∈ P.faces) : is_exposed (P : set E) Q :=
 begin
+  sorry
+  /-
   intro hQnemp,
   obtain ⟨s, hs, hQcarr⟩ := hQ hQnemp,
   obtain rfl | hsnemp := s.eq_empty_or_nonempty,
@@ -130,6 +132,7 @@ begin
     exact (hx.2 la hla).trans (hy la (hs hla)) },
   have := hx.1 la (hs hla),
   dsimp at hx,
+  -/
 end
 
 lemma subset_of_mem_faces {P Q : polyhedron E} (hQ : Q ∈ P.faces) : (Q : set E) ⊆ P :=
@@ -153,7 +156,9 @@ end
 
 lemma faces_finite (P : polyhedron E) : finite P.faces := sorry
 
-instance face_lattice {P : polyhedron E} : complete_lattice P.faces :=
+noncomputable instance face_lattice {P : polyhedron E} : complete_lattice P.faces :=
+sorry
+/-
 { le := λ ⟨X, hX⟩ ⟨Y, hY⟩, X ∈ Y.faces,
   le_refl := λ ⟨X, hX⟩, X.self_mem_faces,
   le_trans := λ ⟨X, hX⟩ ⟨Y, hY⟩ ⟨Z, hZ⟩ hXY hYZ hXnemp, begin
@@ -210,7 +215,7 @@ instance face_lattice {P : polyhedron E} : complete_lattice P.faces :=
   Inf := _,
   Inf_le := _,
   le_Inf := _ }
-
+-/
 end polyhedron
 
 def is_exposed.to_face {P : polyhedron E} {A : set E} (hA : is_exposed (P : set E) A) :

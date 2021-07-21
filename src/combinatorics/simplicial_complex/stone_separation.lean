@@ -13,6 +13,8 @@ variables {E : Type*} [add_comm_group E] [module ℝ E] {x y : E} {A B : set E} 
 lemma subsets_compl_convexes (hA : convex A) (hB : convex B) (hAB : disjoint A B) :
   ∃ C : set E, convex C ∧ convex Cᶜ ∧ A ⊆ C ∧ B ⊆ Cᶜ :=
 begin
+  sorry
+  /-
   let S : set (set E) := {C | convex C ∧ C ⊆ Bᶜ},
   obtain ⟨C, hC, hAC, hCmax⟩ := zorn.zorn_subset_nonempty S (λ c hcS hc ⟨B, hB⟩, ⟨⋃₀c,
     ⟨(zorn.chain.directed_on hc).convex_sUnion (λ A hA, (hcS hA).1), sUnion_subset
@@ -39,4 +41,5 @@ begin
   rintro a ha b hb hbB,
   rw convex.convex_hull_eq hC.1 at ha,
   exact h a ha ⟨b, hb, hbB⟩,
+  -/
 end
