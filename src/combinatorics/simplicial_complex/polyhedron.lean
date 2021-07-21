@@ -1,5 +1,10 @@
-import combinatorics.simplicial_complex.exposed
+/-
+Copyright (c) 2021 Yaël Dillies, Bhavik Mehta. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Yaël Dillies, Bhavik Mehta
+-/
 import combinatorics.simplicial_complex.convex_join
+import combinatorics.simplicial_complex.exposed
 
 open set
 open_locale classical big_operators
@@ -125,7 +130,6 @@ begin
     exact (hx.2 la hla).trans (hy la (hs hla)) },
   have := hx.1 la (hs hla),
   dsimp at hx,
-  sorry,
 end
 
 lemma subset_of_mem_faces {P Q : polyhedron E} (hQ : Q ∈ P.faces) : (Q : set E) ⊆ P :=
@@ -149,9 +153,7 @@ end
 
 lemma faces_finite (P : polyhedron E) : finite P.faces := sorry
 
-noncomputable instance face_lattice {P : polyhedron E} : complete_lattice P.faces :=
-sorry
-/-
+instance face_lattice {P : polyhedron E} : complete_lattice P.faces :=
 { le := λ ⟨X, hX⟩ ⟨Y, hY⟩, X ∈ Y.faces,
   le_refl := λ ⟨X, hX⟩, X.self_mem_faces,
   le_trans := λ ⟨X, hX⟩ ⟨Y, hY⟩ ⟨Z, hZ⟩ hXY hYZ hXnemp, begin
@@ -208,7 +210,7 @@ sorry
   Inf := _,
   Inf_le := _,
   le_Inf := _ }
--/
+
 end polyhedron
 
 def is_exposed.to_face {P : polyhedron E} {A : set E} (hA : is_exposed (P : set E) A) :
@@ -269,7 +271,7 @@ def preimage_polyhedron (P : polyhedron F) : polyhedron E :=
 end continuous_linear_map
 
 /---/
-instance lattice_polyhedrons : semilattice_inf_top (polyhedron E) :=
+def lattice_polyhedrons : semilattice_inf_top (polyhedron E) :=
 { le := λ X Y, (X : set E) ⊆ Y,
   le_refl := λ X, subset.refl X,
   le_trans := λ X Y Z, subset.trans,
@@ -287,8 +289,8 @@ instance lattice_polyhedrons : semilattice_inf_top (polyhedron E) :=
     rintro x hx,
     exact ⟨λ l hl, hx l (finset.mem_union_left _ hl), λ l hl, hx l (finset.mem_union_right _ hl)⟩,
   end },
-  inf_le_left := λ X Y, inter_subset_left X.carrier Y,
-  inf_le_right := λ X Y, inter_subset_right X.carrier Y,
+  inf_le_left := λ X Y, inter_subset_left X Y,
+  inf_le_right := λ X Y, inter_subset_right X Y,
   le_inf := λ X Y Z, subset_inter,
 
   /-bot := { carrier := ∅,
@@ -328,8 +330,6 @@ def face_order_polyhedrons : order_bot (polyhedron E) :=
 /-- The faces of a polyhedron form a bounded and graded lattice. The grading function is the
 dimensican of the face. -/
 def face_lattice_polyhedron (P : polyhedron E) : bounded_lattice P.faces :=
-sorry
-/-
 { le := λ ⟨X, hX⟩ ⟨Y, hY⟩, X ∈ Y.faces,
   le_refl := λ ⟨X, hX⟩, X.self_mem_faces,
   le_trans := λ ⟨X, hX⟩ ⟨Y, hY⟩ ⟨Z, hZ⟩ hXY hYZ hXnemp, begin
@@ -360,14 +360,13 @@ sorry
 
   top := ⟨P, P.self_mem_faces⟩,
   le_top := λ ⟨X, hX⟩, hX }
--/
 
 /-! ### Polytopes -/
 
 /-- A polytope is the convex hull of a finite number of points. -/
 structure polytope (E : Type*) [normed_group E] [normed_space ℝ E] :=
 (carrier : set E)
-(hcarrier : ∃ Vrepr : finset E, carrier = convex_hull ↑Vrepr)
+(hcarrier : ∃ Vrepr : finset E, carrier = convex_hull Vrepr)
 
 namespace polytope
 
@@ -384,7 +383,7 @@ end
 noncomputable def Vrepr (P : polytope E) : finset E :=
 classical.some P.hcarrier
 
-lemma eq_convex_hull_Vrepr (P : polytope E) : (P : set E) = convex_hull ↑P.Vrepr :=
+lemma eq_convex_hull_Vrepr (P : polytope E) : (P : set E) = convex_hull P.Vrepr :=
 classical.some_spec P.hcarrier
 
 lemma convex (P : polytope E) : convex (P : set E) :=

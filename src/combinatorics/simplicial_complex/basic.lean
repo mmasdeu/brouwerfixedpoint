@@ -1,14 +1,9 @@
-import tactic
-import data.real.basic
-import linear_algebra.affine_space.independent
-import linear_algebra.std_basis
-import linear_algebra.affine_space.finite_dimensional
-import linear_algebra.affine_space.combination
-import linear_algebra.finite_dimensional
-import analysis.convex.topology
-import combinatorics.simplicial_complex.dump
+/-
+Copyright (c) 2021 Yaël Dillies, Bhavik Mehta. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Yaël Dillies, Bhavik Mehta
+-/
 import combinatorics.simplicial_complex.simplex
-import combinatorics.simplicial_complex.to_move.default
 -- import data.nat.parity
 
 open_locale classical affine big_operators
@@ -163,8 +158,8 @@ lemma points_subset_space :
   S.points ⊆ S.space :=
 bUnion_subset_bUnion_right (λ x hx, subset_convex_hull x)
 
-noncomputable def simplicial_complex.dim (S : simplicial_complex E) :
-  ℕ := sorry
+--noncomputable def simplicial_complex.dim (S : simplicial_complex E) :
+--  ℕ :=
 
 -- Dumb bug in mathlib, see
 --https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there.20code.20for.20X.3F/topic/R.5Em.20is.20finite.20dimensional.20over.20R/near/231748016
@@ -380,8 +375,8 @@ lemma simplex_combi_interiors_split_interiors (hY : affine_independent ℝ (λ p
   (hXY : convex_hull (X : set E) ⊆ convex_hull ↑Y) :
   ∃ Z ⊆ Y, combi_interior X ⊆ combi_interior Z :=
 begin
-  --let S := simplicial_complex.of_simplex hY,
-  --let F := Y.powerset.filter (λ W : finset E, (X : set E) ⊆ convex_hull ↑W),
+  let S := simplicial_complex.of_simplex hY,
+  let F := Y.powerset.filter (λ W : finset E, (X : set E) ⊆ convex_hull W),
   sorry
   /-obtain ⟨Z, hZ, hZmin⟩ := finset.inf' _
   (begin

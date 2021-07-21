@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2021 Yaël Dillies, Bhavik Mehta. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Yaël Dillies, Bhavik Mehta
+-/
 import combinatorics.simplicial_complex.exposed
 import order.order_dual
 
@@ -46,10 +51,9 @@ begin
     obtain ⟨l, hl⟩ := geometric_hahn_banach_point_point hyx,
     obtain ⟨z, hzB, hz⟩ := is_compact.exists_forall_ge (compact_of_is_closed_subset hAcomp hBclos
       hAB.1) ⟨x, hxB⟩ (continuous.continuous_on l.continuous),
-    --rw ←hBmin {z ∈ B | ∀ w ∈ B, l w ≤ l z} ⟨⟨z, hzB, hz⟩, is_exposed.is_closed ⟨l, rfl⟩ hBclos,
-    --  hAB.trans (is_exposed.is_extreme ⟨l, rfl⟩)⟩ (λ z hz, hz.1) at hyB,
-    --exact not_le.2 hl (hyB.2 x hxB) },
-    sorry, },
+    rw ←hBmin {z ∈ B | ∀ w ∈ B, l w ≤ l z} ⟨⟨z, hzB, hz⟩, is_exposed.is_closed ⟨l, rfl⟩ hBclos,
+      hAB.trans (is_exposed.is_extreme ⟨l, rfl⟩)⟩ (λ z hz, hz.1) at hyB,
+    exact not_le.2 hl (hyB.2 x hxB) },
   apply zorn.subset_reverse,
   rintro F hFS hF,
   cases F.eq_empty_or_nonempty with hFemp hFnemp,
@@ -86,7 +90,7 @@ begin
   obtain ⟨l, s, hls, hsx⟩ := geometric_hahn_banach_closed_point
     (convex.closure (convex_convex_hull _)) is_closed_closure hxB,
   let C := {y ∈ A | ∀ z ∈ A, l z ≤ l y},
-  have hCexp : is_exposed A C := sorry, --⟨l, rfl⟩,
+  have hCexp : is_exposed A C := ⟨l, rfl⟩,
   obtain ⟨y, hyC⟩ := has_extreme_point_of_convex_of_compact_of_nonempty
     begin
       obtain ⟨z, hzA, hz⟩ := is_compact.exists_forall_ge hAcomp ⟨x, hxA⟩

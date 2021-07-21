@@ -1,14 +1,11 @@
-import tactic
-import data.real.basic
-import linear_algebra.affine_space.independent
-import linear_algebra.std_basis
-import linear_algebra.affine_space.finite_dimensional
-import linear_algebra.affine_space.combination
-import linear_algebra.finite_dimensional
+/-
+Copyright (c) 2021 Yaël Dillies, Bhavik Mehta. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Yaël Dillies, Bhavik Mehta
+-/
 import analysis.convex.topology
-import order.filter.archimedean
-import combinatorics.simplicial_complex.to_move
 import combinatorics.simplicial_complex.extreme
+import order.filter.archimedean
 
 /-!
 # Definitions and lemmas about individual simplices
@@ -272,7 +269,7 @@ begin
 end
 
 lemma combi_frontier_subset_convex_hull :
-  combi_frontier X ⊆ convex_hull  ↑X :=
+  combi_frontier X ⊆ convex_hull ↑X :=
 bUnion_subset (λ Y hY, convex_hull_mono hY.1)
 
 lemma convex_hull_eq_interior_union_combi_frontier :

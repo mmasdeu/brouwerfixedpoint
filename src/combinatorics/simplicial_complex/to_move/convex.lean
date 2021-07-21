@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2021 Yaël Dillies, Bhavik Mehta. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Yaël Dillies, Bhavik Mehta
+-/
 import analysis.convex.topology
 import topology.basic
 import order.directed
@@ -6,20 +11,6 @@ import order.directed
 variables {E : Type*} [add_comm_group E] [module ℝ E] {s X Y : set E}
 
 open set
-
---TODO: move to mathlib
-lemma convex_sUnion_of_directed {c : set (set E)} (hcdirected : directed_on has_subset.subset c)
-  (hc : ∀ ⦃A : set E⦄, A ∈ c → convex A) :
-  convex (⋃₀c) :=
-begin
-  rw convex_iff_segment_subset,
-  rintro x y hx hy z hz,
-  rw mem_sUnion at ⊢ hx hy,
-  obtain ⟨X, hX, hx⟩ := hx,
-  obtain ⟨Y, hY, hy⟩ := hy,
-  obtain ⟨Z, hZ, hXZ, hYZ⟩ := hcdirected X hX Y hY,
-  exact ⟨Z, hZ, convex_iff_segment_subset.1 (hc hZ) (hXZ hx) (hYZ hy) hz⟩,
-end
 
 --will be proven from the stuff about closure operators
 lemma convex_hull_convex_hull_union :
@@ -53,6 +44,8 @@ begin
   refl,
 end
 
+lemma convex_hull_pair {a b : E} :
+  convex_hull {a, b} = (segment a b) := sorry
 
 --TODO: Generalise to LCTVS
 variables [normed_group E] [normed_space ℝ E] {x : E} {A B : set E}

@@ -1,10 +1,14 @@
+/-
+Copyright (c) 2021 Yaël Dillies, Bhavik Mehta. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Yaël Dillies, Bhavik Mehta
+-/
 import combinatorics.simplicial_complex.link
 import combinatorics.simplicial_complex.subdivision
-import set_theory.fincard
 
 namespace affine
 open set
-variables {m n : ℕ} {E : Type*} [normed_group E] [decidable_eq E] [normed_space ℝ E] {S : simplicial_complex E}
+variables {m n : ℕ} {E : Type*} [normed_group E] [normed_space ℝ E] {S : simplicial_complex E}
   {X Y : finset E} {A : set (finset E)}
 
 def simplicial_complex.on_boundary (S : simplicial_complex E) (X : finset E) :

@@ -1,8 +1,13 @@
+/-
+Copyright (c) 2021 Yaël Dillies, Bhavik Mehta. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Yaël Dillies, Bhavik Mehta
+-/
 import combinatorics.simplicial_complex.link
 
 namespace affine
 open set
-variables {E : Type*} [normed_group E] [normed_space ℝ E] [decidable_eq E] {S : simplicial_complex E}
+variables {E : Type*} [normed_group E] [normed_space ℝ E] {S : simplicial_complex E}
   {A : set (finset E)}
 
 /--

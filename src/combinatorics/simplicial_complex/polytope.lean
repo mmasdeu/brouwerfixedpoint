@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2021 Yaël Dillies, Bhavik Mehta. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Yaël Dillies, Bhavik Mehta
+-/
 import combinatorics.simplicial_complex.convex_independence
 import combinatorics.simplicial_complex.glued
 
@@ -57,8 +62,7 @@ def polytope.edges (p : polytope E) :
   set (finset E) :=
 ⋂ (S : simplicial_complex E) (H : p.space = S.space), {X | X ∈ S.faces ∧ X.card = 2}
 
-def polytope.faces {n : ℕ} (P : polytope E) : set (finset E) :=
-sorry
+--def polytope.faces {n : ℕ} (P : polytope E) : set (finset E) :=
 --  P.realisation.boundary.faces
 
 noncomputable def polytope.triangulation (p : polytope E) :
