@@ -315,6 +315,8 @@ def lattice_polyhedrons : semilattice_inf_top (polyhedron E) :=
     end },
   le_top := λ X, subset_univ X }
 
+variables [lattice (polyhedron E)]
+
 lemma faces_mono {P Q : polyhedron E} (hPQ : P ≤ Q) : P.faces ⊆ Q.faces := sorry
 
 open polyhedron
