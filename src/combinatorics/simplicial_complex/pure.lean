@@ -27,7 +27,7 @@ def simplicial_complex.pure (S : simplicial_complex E) :
 
 def simplicial_complex.full_dimensional (S : simplicial_complex E) :
   Prop :=
-S.pure_of (S.dim + 1)
+sorry --S.pure_of (S.dim + 1)
 
 /--
 The pureness of a pure simplicial complex is the cardinality of its facets. Set to 0 for non pure

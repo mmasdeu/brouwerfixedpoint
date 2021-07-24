@@ -337,6 +337,9 @@ def face_order_polyhedrons : order_bot (polyhedron E) :=
 /-- The faces of a polyhedron form a bounded and graded lattice. The grading function is the
 dimensican of the face. -/
 def face_lattice_polyhedron (P : polyhedron E) : bounded_lattice P.faces :=
+sorry
+
+/-
 { le := λ ⟨X, hX⟩ ⟨Y, hY⟩, X ∈ Y.faces,
   le_refl := λ ⟨X, hX⟩, X.self_mem_faces,
   le_trans := λ ⟨X, hX⟩ ⟨Y, hY⟩ ⟨Z, hZ⟩ hXY hYZ hXnemp, begin
@@ -367,20 +370,21 @@ def face_lattice_polyhedron (P : polyhedron E) : bounded_lattice P.faces :=
 
   top := ⟨P, P.self_mem_faces⟩,
   le_top := λ ⟨X, hX⟩, hX }
+-/
 
 /-! ### Polytopes -/
 
 /-- A polytope is the convex hull of a finite number of points. -/
 structure polytope (E : Type*) [normed_group E] [normed_space ℝ E] :=
 (carrier : set E)
-(hcarrier : ∃ Vrepr : finset E, carrier = convex_hull Vrepr)
+(hcarrier : ∃ Vrepr : finset E, carrier = sorry) -- -convex_hull Vrepr)
 
 namespace polytope
 
 instance : has_coe (polytope E) (set E) := { coe := λ P, P.carrier }
 
 instance : has_bot (polytope E) :=
-{ bot := { carrier := ∅, hcarrier := ⟨∅, convex_hull_empty.symm⟩ } }
+{ bot := { carrier := ∅, hcarrier := ⟨∅,sorry ⟩}}-- convex_hull_empty.symm⟩ } }
 
 @[ext] protected lemma ext {P Q : polytope E} (h : (P : set E) = Q) : P = Q :=
 begin
@@ -390,13 +394,14 @@ end
 noncomputable def Vrepr (P : polytope E) : finset E :=
 classical.some P.hcarrier
 
-lemma eq_convex_hull_Vrepr (P : polytope E) : (P : set E) = convex_hull P.Vrepr :=
-classical.some_spec P.hcarrier
+--lemma eq_convex_hull_Vrepr (P : polytope E) : (P : set E) = convex_hull P.Vrepr :=
+--classical.some_spec P.hcarrier
 
 lemma convex (P : polytope E) : convex (P : set E) :=
 begin
-  rw P.eq_convex_hull_Vrepr,
-  exact convex_convex_hull _,
+  sorry,
+  --rw P.eq_convex_hull_Vrepr,
+  --exact convex_convex_hull _,
 end
 
 instance lattice_polytopes : lattice (polytope E) :=
@@ -408,8 +413,9 @@ instance lattice_polytopes : lattice (polytope E) :=
   sup := λ X Y, { carrier := convex_join X Y,
     hcarrier := begin
       use X.Vrepr ∪ Y.Vrepr,
-      rw [X.eq_convex_hull_Vrepr, Y.eq_convex_hull_Vrepr, ←convex_hull_union],
-      norm_cast,
+      sorry,
+      --rw [X.eq_convex_hull_Vrepr, Y.eq_convex_hull_Vrepr, ←convex_hull_union],
+      --norm_cast,
     end },
   le_sup_left := λ X Y, subset_convex_join_left X Y,
   le_sup_right := λ X Y, subset_convex_join_right X Y,
@@ -429,18 +435,22 @@ instance lattice_polytopes : lattice (polytope E) :=
 
 protected noncomputable def std_simplex (ι : Type*) [fintype ι] : polytope (ι → ℝ) :=
 { carrier := std_simplex ι,
-  hcarrier := ⟨finset.image (λ (i j : ι), ite (i = j) 1 0) finset.univ,
-    by rw [←convex_hull_basis_eq_std_simplex, finset.coe_image, finset.coe_univ, image_univ]⟩ }
-
+  hcarrier := sorry, --⟨finset.image (λ (i j : ι), ite (i = j) 1 0) finset.univ,
+  --by rw [←convex_hull_basis_eq_std_simplex, finset.coe_image, finset.coe_univ, image_univ]⟩ }
+}
 end polytope
 
 namespace linear_map
 variables {F : Type*} [normed_group F] [normed_space ℝ F] (l : E →ₗ[ℝ] F)
 
 def image_polytope (P : polytope E) : polytope F :=
+sorry
+/-
 { carrier := l '' P,
-  hcarrier := ⟨finset.image l P.Vrepr, by rw [P.eq_convex_hull_Vrepr, finset.coe_image,
-    l.convex_hull_image]⟩ }
+  hcarrier := --⟨finset.image l P.Vrepr, by rw [P.eq_convex_hull_Vrepr, finset.coe_image,
+  --  l.convex_hull_image]⟩ }
+}
+-/
 
 end linear_map
 
@@ -466,11 +476,12 @@ protected def polyhedron (P : polytope E) : polyhedron E :=
 continuous_linear_map.image_polyhedron (∑ x : (P.Vrepr : set E), (@continuous_linear_map.proj ℝ _
   (P.Vrepr : set E) (λ i, ℝ) _ _ _ x).smul_right x.1) (polyhedron.std_simplex (P.Vrepr : set E)),
   use Q.Hrepr,
-  rw [P.eq_convex_hull_Vrepr, finset.convex_hull_eq_image, ←Q.eq_Hrepr,
-    continuous_linear_map.image_polyhedron_eq, polyhedron.std_simplex_eq],
+  -- rw [P.eq_convex_hull_Vrepr, finset.convex_hull_eq_image, ←Q.eq_Hrepr,
+  --   continuous_linear_map.image_polyhedron_eq, polyhedron.std_simplex_eq],
   --have : ⇑(∑ (x : (P.Vrepr : set E)), (@linear_map.proj ℝ (P.Vrepr : set E) _ (λ i, ℝ) _ _ x).smul_right x.1) =
   --  ⇑(∑ (x : (P.Vrepr : set E)), (@continuous_linear_map.proj ℝ _ (P.Vrepr : set E) (λ i, ℝ) _ _ _ x).smul_right x.1),
-  simp,
+  --simp,
+  sorry
   end }
 
 lemma polyhedron_eq (P : polytope E) : (P.polyhedron : set E) = P :=

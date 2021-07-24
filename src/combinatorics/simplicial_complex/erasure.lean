@@ -9,7 +9,7 @@ import data.set.basic
 namespace affine
 open set
 variables {E : Type*} [normed_group E] [normed_space ℝ E] {S : simplicial_complex E}
-  {A : set (finset E)} [semilattice_inf_bot (finset E)]
+  {A : set (finset E)} [semilattice_inf_bot (finset E)] [decidable_eq E]
 
 /--
 The erasure of a simplicial complex S and a set A is the subcomplex obtained after removing all
