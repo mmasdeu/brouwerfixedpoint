@@ -25,10 +25,8 @@ jobs:
 
       - name: Link and fetch mathlib
         run: |
-          mv brouwerfixedpoint brouwerfixedpoint_orig
           leanproject get mmasdeu/brouwerfixedpoint
           mv brouwerfixedpoint project
-          mv brouwerfixedpoint_orig brouwerfixedpoint
           cd project && leanproject get-m && cd ..
           inv decls
 
