@@ -30,7 +30,13 @@ jobs:
           ln -s brouwerfixedpoint project
           cd project && leanproject get-m && cd ..
           inv decls
+          
+      - name: update branch
+        if: github.ref == 'refs/heads/master'
+        uses: leanprover-contrib/update-versions-action@master
 
+      - name: build project
+        uses: leanprover-contrib/lean-build-action@master
       - name: Install Leanblueprint and generate web in tex env
         uses: xu-cheng/texlive-action/full@v1
         with:
