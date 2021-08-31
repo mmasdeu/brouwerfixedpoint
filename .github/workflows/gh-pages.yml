@@ -27,7 +27,7 @@ jobs:
         run: |
           leanproject get mmasdeu/brouwerfixedpoint
           ln -s brouwerfixedpoint project
-          cd project && yes | rm -rf doc && leanproject get-m && cd ..
+          cd project && yes | rm -rf doc && leanproject get-m && leanproject build && cd ..
           inv decls
 
       - name: Install Leanblueprint and generate web in tex env
