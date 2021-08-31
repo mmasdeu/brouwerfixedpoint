@@ -1,4 +1,4 @@
-# Brower Fixed Point Theorem in Lean
+# Proving Brower Fixed Point Theorem in Lean
 
 The blueprint was forked from [liquid tensor experiment](https://github.com/leanprover-community/liquid/).
 
