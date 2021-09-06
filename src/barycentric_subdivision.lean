@@ -11,29 +11,64 @@ noncomputable def barycenter(L: list E): E :=
   
 variables (L : list E) [pseudo_metric_space E]
 
-#check L.tail
-#check barycenter ↑L
+-- Why can't I turn this into an instance?
+lemma tail_nodup {T: Type}(L : list T) [list.nodup L] : list.nodup (L.tail) :=
+begin
+  induction L with x L IH,
+  {
+    simp,
+  },
+  {
+    simp,
+    finish,
+  },
+end
 
--- Donada una ordenació dels vertexs de cada cara, tenim un simplex de la subdivisió baricentrica.
--- To do, afegir `[list.nodup L]`
-def face_baricentric_subdivision(L : list E): set E :=
+lemma tail_nodup2 {T: Type}(head: T)(tail : list T) [list.nodup (head :: tail)] : list.nodup tail :=
+begin
+  induction tail with x tail IH,
+  {
+    simp,
+  },
+  {
+    simp,
+    finish,
+  },
+end
+
+namespace list
+
+-- Given an order of the vertices of each face, we have a simplex of the barycentric subdivision.
+-- To do, add `[list.nodup L]`. Done, but I'm not sure if it's useful.
+def face_baricentric_subdivision{L : list E}[nodup: list.nodup L] : set E :=
+  begin
+    induction L with head tail smaller_dim_baricentric_subdivision nodup,
+    { exact (∅ : finset E) },
+    { 
+      have : tail.nodup :=  @tail_nodup2 _ _ _ nodup,
+      exact {barycenter (list.cons head tail)} ∪ (@smaller_dim_baricentric_subdivision this)},
+    
+    -- Recursive definition
+    -- If L.length > 1,
+    -- add the point `barycenter L` and all the points of `face_barycentric_subdivision L.tail`
+    -- If L.length = 1, add the point.
+
+  end
+
+def face_baricentric_subdivision2{L : list E} : set E :=
   begin
     induction L with head tail smaller_dim_baricentric_subdivision,
     { exact (∅ : finset E) },
-    { exact {barycenter (list.cons head tail)} ∪ smaller_dim_baricentric_subdivision }
-    -- Definició recursiva
-    -- Si L.length > 1,
-    -- afegim el punt `barycenter L` i tots els punts de `face_barycentric_subdivision L.tail`
-    -- Si L.length = 1, afegim el punt.
+    { 
+      exact { barycenter (list.cons head tail) } ∪ smaller_dim_baricentric_subdivision },
+    
+    -- Recursive definition
+    -- If L.length > 1,
+    -- add the point `barycenter L` and all the points of `face_barycentric_subdivision L.tail`
+    -- If L.length = 1, add the point.
   end
--- Cada cara del complx simplicial s'ha de subdividir amb aquesta funció. 
--- Per cada permutació dels vertexs de la cara tenim un simplex de la subdivisió.
--- Falta afegir la condició que L conté tots els vertexs de la cara, que jo ho faria així:
---  [ hL : (∀ x : S.vertices, x ∈ L)  ]
 
-
-
--- L'objectiu de tot això seria aconseguir completar aquesta definició.
+-- The goal is to complete this definition.
 /-def simplicial_complex.barycentric_subdivision (S : simplicial_complex E) : simplicial_complex E :=
 { faces := {X | ∃ {L : list (fin m → ℝ)}, list.to_finset L ∈ S.faces ∧ X = },
   indep := _,
