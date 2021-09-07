@@ -145,7 +145,6 @@ local notation `E` := fin d → ℝ
 
 def H := { x: E | (∑ (i : fin d), x i) = 1}
 
-
 variables (f: E → E)
 
 example (a b : real) (r : ennreal) (h1 : (a : ereal) ≤ (b : ereal) + r) (h2 : (a : ereal) ≥ (b : ereal) - r) :

@@ -18,6 +18,5 @@ open set
 variables {S: simplicial_complex E} [hS: simplicial_complex.finite S]
           [h₂S : simplicial_complex.full_dimensional S]
 
-#check hS
 
 

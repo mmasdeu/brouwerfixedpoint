@@ -96,3 +96,5 @@ open set
 def diameter (S: simplicial_complex E) [simplicial_complex.finite S]: ℝ :=
  sorry
  -- maxim diametre entre totes les cares.
+
+end list
