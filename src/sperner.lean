@@ -143,15 +143,46 @@ end
 variables {d : ℕ}
 local notation `E` := fin d → ℝ
 
-def H := { x: E | (∑ (i : fin d), x i) = 1}
-
+def H := {x : E | (∑ (i : fin d), x i) = 1}
 
 variables (f: E → E)
+
+lemma of_real_neg_real_equiv {x : ℝ} (hx : 0 ≤ x) : (ennreal.of_real x : ereal) = (x : ereal) :=
+begin
+  rw (ennreal.of_real_eq_coe_nnreal hx),
+  exact rfl,
+end
 
 example (a b : real) (r : ennreal) (h1 : (a : ereal) ≤ (b : ereal) + r) (h2 : (a : ereal) ≥ (b : ereal) - r) :
   ennreal.of_real (abs (a - b)) ≤ r :=
 begin
-  sorry
+  cases (abs_choice (a - b)),
+  {
+    have : (a : ereal) - (b : ereal) ≤ (r : ereal), 
+    {
+      cases (em' (r = ⊤)),
+      {
+        sorry
+      },
+      { rw h_1,
+        exact with_top.le_none },    
+    },
+    exact ereal.coe_ennreal_le_coe_ennreal_iff.mp (by rwa [of_real_neg_real_equiv (abs_nonneg (a - b)), h]),
+  },
+  {
+    have hab : -(a - b) = b - a, by ring,
+    have : (b : ereal) - (a : ereal) ≤ (r : ereal),
+    {
+      cases (em' (r = ⊤)),
+      {
+        sorry
+      },
+      { rw h_1,
+        exact with_top.le_none },
+    },
+    exact ereal.coe_ennreal_le_coe_ennreal_iff.mp (by rwa [of_real_neg_real_equiv (abs_nonneg (a - b)), h, hab]),
+  },
+  
 end
 
 lemma points_coordinates_bounded_distance (x y : E) (i : fin d) :
