@@ -109,7 +109,7 @@ lemma convex_join_empty :
 begin
   unfold convex_join,
   rw union_empty,
-  simp only [mem_empty_eq, Union_neg, Union_empty, not_false_iff, union_empty],
+  simp only [Union_false, Union_empty, union_empty],
 end
 
 lemma empty_convex_join :

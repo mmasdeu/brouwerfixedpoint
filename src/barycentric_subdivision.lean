@@ -11,34 +11,36 @@ noncomputable def barycenter(L: list E): E :=
   
 variables (L : list E) [pseudo_metric_space E]
 
-#check L.tail
-#check barycenter ↑L
+namespace list
 
--- Donada una ordenació dels vertexs de cada cara, tenim un simplex de la subdivisió baricentrica.
--- To do, afegir `[list.nodup L]`
-def face_baricentric_subdivision(L : list E): set E :=
+-- Given an order of the vertices of each face, we have a simplex of the barycentric subdivision.
+  -- Recursive definition
+  -- If L.length > 1,
+  -- add the point `barycenter L` and all the points of `face_barycentric_subdivision L.tail`
+  -- If L.length = 1, add the point.
+
+noncomputable def face_baricentric_subdivision(L : list E) : finset E :=
   begin
     induction L with head tail smaller_dim_baricentric_subdivision,
     { exact (∅ : finset E) },
-    { exact {barycenter (list.cons head tail)} ∪ smaller_dim_baricentric_subdivision }
-    -- Definició recursiva
-    -- Si L.length > 1,
-    -- afegim el punt `barycenter L` i tots els punts de `face_barycentric_subdivision L.tail`
-    -- Si L.length = 1, afegim el punt.
+    { exact { barycenter (list.cons head tail) } ∪ smaller_dim_baricentric_subdivision },
   end
--- Cada cara del complx simplicial s'ha de subdividir amb aquesta funció. 
--- Per cada permutació dels vertexs de la cara tenim un simplex de la subdivisió.
--- Falta afegir la condició que L conté tots els vertexs de la cara, que jo ho faria així:
---  [ hL : (∀ x : S.vertices, x ∈ L)  ]
+   
+open affine
 
-
-
--- L'objectiu de tot això seria aconseguir completar aquesta definició.
-/-def simplicial_complex.barycentric_subdivision (S : simplicial_complex E) : simplicial_complex E :=
-{ faces := {X | ∃ {L : list (fin m → ℝ)}, list.to_finset L ∈ S.faces ∧ X = },
-  indep := _,
-  down_closed := _,
-  disjoint := _ }-/
+-- The goal is to complete this definition.
+noncomputable def simplicial_complex.barycentric_subdivision (S : simplicial_complex E) : simplicial_complex E :=
+  { faces := {X | ∃ {L : list E}, list.nodup L ∧ list.to_finset L ∈ S.faces ∧ X = face_baricentric_subdivision L},
+  indep := 
+    begin
+      rintros face ⟨vertex_list, ⟨vertex_nodup, ⟨h_face3, face_from_vertex_list⟩⟩⟩,
+      cases S,
+      simp at h_face3,
+      -- help?
+      sorry,
+    end,
+  down_closed := sorry,
+  disjoint := sorry }
 
 -- The maximum distance bewteen any pair of vertices in a simplicial complex.
 noncomputable def distance_vertices  (A : set E) : ℝ :=
@@ -61,3 +63,5 @@ open set
 def diameter (S: simplicial_complex E) [simplicial_complex.finite S]: ℝ :=
  sorry
  -- maxim diametre entre totes les cares.
+
+end list
