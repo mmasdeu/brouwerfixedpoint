@@ -82,7 +82,7 @@
 </div>
 
     <a class="latex_link" href="sect0003.html#barycenter">LaTeX</a>
-	<a class="lean_link" href="https://github.com/mmasdeu/brouwerfixedpoint//blob/e8567c5220e5fda352867c05c5c894f4e22e09b4/src/barycentric_subdivision.lean#L9">Lean</a></div>
+	<a class="lean_link" href="https://github.com/mmasdeu/brouwerfixedpoint//blob/79f0b5bf9719aeaffdd623921dd6831976c3db57/src/barycentric_subdivision.lean#L9">Lean</a></div>
     
       </div>
     </div>
@@ -247,7 +247,7 @@
 </div>
 
     <a class="latex_link" href="sect0001.html#is_sperner_colouring">LaTeX</a>
-	<a class="lean_link" href="https://github.com/mmasdeu/brouwerfixedpoint//blob/e8567c5220e5fda352867c05c5c894f4e22e09b4/src/combinatorics/simplicial_complex/sperner.lean#L17">Lean</a></div>
+	<a class="lean_link" href="https://github.com/mmasdeu/brouwerfixedpoint//blob/79f0b5bf9719aeaffdd623921dd6831976c3db57/src/combinatorics/simplicial_complex/sperner.lean#L17">Lean</a></div>
     
       </div>
     </div>
@@ -315,7 +315,7 @@ graphContainer.graphviz({useWorker: true})
     .width(width)
     .height(height)
     .fit(true)
-    .renderDot('strict digraph "" {	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	is_sperner_colouring	[color=green,		fillcolor="#b0eca3",		label=is_sperner_colouring,		shape=box,		style=filled];	induced_colouring_is_sperner_colouring	[label=induced_colouring_is_sperner_colouring,		shape=ellipse];	is_sperner_colouring -> induced_colouring_is_sperner_colouring	[style=dashed];	barycenter	[color=blue,		label=barycenter,		shape=box];	barycentric_subdivision	[label=barycentric_subdivision,		shape=box];	barycenter -> barycentric_subdivision	[style=dashed];	diameter_barycentric_subdivision	[label=diameter_barycentric_subdivision,		shape=ellipse];	exists_small_subdivision_of_simplex	[color=blue,		label=exists_small_subdivision_of_simplex,		shape=ellipse];	diameter_barycentric_subdivision -> exists_small_subdivision_of_simplex;	sperner	[color=green,		label=sperner,		shape=ellipse];	barycentric_subdivision -> diameter_barycentric_subdivision	[style=dashed];	barycentric_subdivision -> exists_small_subdivision_of_simplex;	"def:induced_colouring"	[color=blue,		label=induced_colouring,		shape=box];	"def:induced_colouring" -> induced_colouring_is_sperner_colouring	[style=dashed];	small_panchromatic_simplex_has_almost_fixed_point	[color=blue,		fillcolor="#a3d6ff",		label=small_panchromatic_simplex_has_almost_fixed_point,		shape=ellipse,		style=filled];	arbitrary_almost_fixed_points_implies_fixed_point	[color=blue,		fillcolor="#a3d6ff",		label=arbitrary_almost_fixed_points_implies_fixed_point,		shape=ellipse,		style=filled];	diameter_simplex_is_longest_edge	[color=blue,		fillcolor="#a3d6ff",		label=diameter_simplex_is_longest_edge,		shape=ellipse,		style=filled];	diameter_simplex_is_longest_edge -> diameter_barycentric_subdivision;}')
+    .renderDot('strict digraph "" {	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	is_sperner_colouring	[color=green,		fillcolor="#b0eca3",		label=is_sperner_colouring,		shape=box,		style=filled];	induced_colouring_is_sperner_colouring	[label=induced_colouring_is_sperner_colouring,		shape=ellipse];	is_sperner_colouring -> induced_colouring_is_sperner_colouring	[style=dashed];	barycentric_subdivision	[label=barycentric_subdivision,		shape=box];	exists_small_subdivision_of_simplex	[color=blue,		label=exists_small_subdivision_of_simplex,		shape=ellipse];	barycentric_subdivision -> exists_small_subdivision_of_simplex;	diameter_barycentric_subdivision	[label=diameter_barycentric_subdivision,		shape=ellipse];	barycentric_subdivision -> diameter_barycentric_subdivision	[style=dashed];	barycenter	[color=blue,		label=barycenter,		shape=box];	barycenter -> barycentric_subdivision	[style=dashed];	sperner	[color=green,		label=sperner,		shape=ellipse];	"def:induced_colouring"	[color=blue,		label=induced_colouring,		shape=box];	"def:induced_colouring" -> induced_colouring_is_sperner_colouring	[style=dashed];	small_panchromatic_simplex_has_almost_fixed_point	[color=blue,		fillcolor="#a3d6ff",		label=small_panchromatic_simplex_has_almost_fixed_point,		shape=ellipse,		style=filled];	arbitrary_almost_fixed_points_implies_fixed_point	[color=blue,		fillcolor="#a3d6ff",		label=arbitrary_almost_fixed_points_implies_fixed_point,		shape=ellipse,		style=filled];	diameter_simplex_is_longest_edge	[color=blue,		fillcolor="#a3d6ff",		label=diameter_simplex_is_longest_edge,		shape=ellipse,		style=filled];	diameter_simplex_is_longest_edge -> diameter_barycentric_subdivision;	diameter_barycentric_subdivision -> exists_small_subdivision_of_simplex;}')
     .on("end", interactive);
 
 clickNode = function() {
