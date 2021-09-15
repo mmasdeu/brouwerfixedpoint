@@ -157,32 +157,37 @@ example (a b : real) (r : ennreal) (h1 : (a : ereal) ≤ (b : ereal) + r) (h2 : 
   ennreal.of_real (abs (a - b)) ≤ r :=
 begin
   cases (abs_choice (a - b)),
-  {
-    have : (a : ereal) - (b : ereal) ≤ (r : ereal), 
-    {
-      cases (em' (r = ⊤)),
-      {
-        sorry
-      },
-      { rw h_1,
-        exact with_top.le_none },    
-    },
-    exact ereal.coe_ennreal_le_coe_ennreal_iff.mp (by rwa [of_real_neg_real_equiv (abs_nonneg (a - b)), h]),
-  },
-  {
-    have hab : -(a - b) = b - a, by ring,
+  { have : (a : ereal) - (b : ereal) ≤ (r : ereal), 
+    { rcases (ereal.cases (r : ereal)) with h_1 | ⟨x, hx⟩ | h_3,
+      { have hr0: (r : ereal) < 0,
+        { rw h_1,
+          exact ereal.bot_lt_zero },
+        have h0r:= ereal.coe_ennreal_nonneg r,
+        rw lt_iff_not_ge at hr0,
+        contradiction },
+      { let hb := le_of_eq (eq.refl (-↑b)), 
+        obtain hh := add_le_add h1 hb,
+        have hr : b + x + -b = x, by ring,
+        have hbr : (b : ereal) + (r : ereal) + - (b :ereal) = (r : ereal),
+        { rw hx,
+          exact (congr_arg coe (eq.symm hr)).symm },
+        rwa ← hbr },
+      { rw h_3,
+        exact with_top.le_none } },
+    exact ereal.coe_ennreal_le_coe_ennreal_iff.mp (by rwa [of_real_neg_real_equiv (abs_nonneg (a - b)), h]) },
+  { have hab : -(a - b) = b - a, by ring,
     have : (b : ereal) - (a : ereal) ≤ (r : ereal),
-    {
-      cases (em' (r = ⊤)),
-      {
-        sorry
-      },
-      { rw h_1,
-        exact with_top.le_none },
-    },
-    exact ereal.coe_ennreal_le_coe_ennreal_iff.mp (by rwa [of_real_neg_real_equiv (abs_nonneg (a - b)), h, hab]),
-  },
-  
+    { rcases (ereal.cases (r : ereal)) with h_1 |⟨x, hx⟩ | h_3,
+      { have hr0: (r : ereal) < 0,
+        { rw h_1,
+          exact ereal.bot_lt_zero },
+        have h0r:= ereal.coe_ennreal_nonneg r,
+        rw lt_iff_not_ge at hr0,
+        contradiction },
+      { sorry },
+      { rw h_3,
+        exact with_top.le_none } },
+    exact ereal.coe_ennreal_le_coe_ennreal_iff.mp (by rwa [of_real_neg_real_equiv (abs_nonneg (a - b)), h, hab]) },
 end
 
 lemma points_coordinates_bounded_distance (x y : E) (i : fin d) :
