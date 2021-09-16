@@ -147,7 +147,8 @@ begin
   exact rfl,
 end
 
-example (a b : real) (r : ennreal) (h1 : (a : ereal) ≤ (b : ereal) + r) (h2 : (a : ereal) ≥ (b : ereal) - r) :
+
+lemma abs_sub_leq (a b : real) (r : ennreal) (h1 : (a : ereal) ≤ (b : ereal) + r) (h2 : (a : ereal) ≥ (b : ereal) - r) :
   ennreal.of_real (abs (a - b)) ≤ r :=
 begin
   cases (abs_choice (a - b)),
@@ -178,15 +179,27 @@ begin
         have h0r:= ereal.coe_ennreal_nonneg r,
         rw lt_iff_not_ge at hr0,
         contradiction },
-      { sorry },
+      {
+        rw hx at *,
+        change (((b - a) : ℝ) : ereal) ≤ x,
+        change (a : ereal ) ≥ (((b - x) : ℝ) : ereal) at h2,
+        simp only [ge_iff_le, eq_self_iff_true, neg_sub, ereal.coe_le_coe_iff] at *,
+        linarith },
       { rw h_3,
         exact with_top.le_none } },
     exact ereal.coe_ennreal_le_coe_ennreal_iff.mp (by rwa [of_real_neg_real_equiv (abs_nonneg (a - b)), h, hab]) },
 end
 
+example (x y : E) : edist x y = ennreal.of_real (∑ i, (x i - y i)^2) :=
+begin
+  sorry
+end
+
 lemma points_coordinates_bounded_distance (x y : E) (i : fin d) :
   ennreal.of_real (abs (x i - y i)) ≤ edist x y :=
 begin
+  unfold edist,
+  
   sorry
 end
 
